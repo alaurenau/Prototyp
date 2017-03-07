@@ -131,9 +131,9 @@ public class JNLPTextureLoader implements ITextureLoader {
 
         BufferedImage buffImage = null;
         try {
-            if (imageCache.get(path) != null)
+            if (imageCache.get(path) != null) {
                 buffImage = (BufferedImage) imageCache.get(path);
-            else {
+            } else {
                 System.out.println("Loading image:" + path);
                 buffImage = ImageIO.read(new FileImageInputStream(new File(path)));
                 imageCache.put(path, buffImage);
@@ -147,8 +147,9 @@ public class JNLPTextureLoader implements ITextureLoader {
         ByteBuffer scratch = ByteBuffer.allocateDirect(textWidth * textHeight * bytesPerPixel).order(ByteOrder.nativeOrder());
         DataBufferByte data = ((DataBufferByte) buffImage.getRaster().getDataBuffer());
 
-        for (int i = 0; i < textHeight; i++)
+        for (int i = 0; i < textHeight; i++) {
             scratch.put(data.getData(), (xOffSet + (yOffSet + i) * buffImage.getWidth()) * bytesPerPixel, textWidth * bytesPerPixel);
+        }
 
         scratch.rewind();
 
@@ -182,9 +183,9 @@ public class JNLPTextureLoader implements ITextureLoader {
 
         BufferedImage buffImage = null;
         try {
-            if (imageCache.get(path) != null)
+            if (imageCache.get(path) != null) {
                 buffImage = (BufferedImage) imageCache.get(path);
-            else {
+            } else {
                 System.out.println("Loading image:" + path);
                 buffImage = ImageIO.read(new FileImageInputStream(new File(path)));
                 imageCache.put(path, buffImage);
@@ -200,15 +201,15 @@ public class JNLPTextureLoader implements ITextureLoader {
         byte[] data = ((DataBufferByte) buffImage.getRaster().getDataBuffer()).getData();
 
 
-        for (int i = 0; i < rows; i++)
+        for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 toReturntextures[i * cols + j] = loadTexture(path, j * textWidth + xOffSet, i * textHeight + yOffSet, textWidth, textHeight);
                 /*
-				for (int z = 0 ; z < textHeight ; z ++)
+                for (int z = 0 ; z < textHeight ; z ++)
 					scratch.put(data,(xOffSet+(yOffSet+z)*buffImage.getWidth())*bytesPerPixel  + (j * textWidth + i* buffImage.getWidth()) * bytesPerPixel, textWidth*bytesPerPixel);
-				
+
 				scratch.rewind();
-		        
+
 		        // Create A IntBuffer For Image Address In Memory
 		        IntBuffer buf = ByteBuffer.allocateDirect(12).order(ByteOrder.nativeOrder()).asIntBuffer();
 		        GL11.glGenTextures(buf); // Create Texture In OpenGL
@@ -223,12 +224,13 @@ public class JNLPTextureLoader implements ITextureLoader {
 		        newTexture.textureId = buf.get(0);     // Return Image Addresses In Memory
 		        newTexture.textureHeight = textHeight;
 		        newTexture.textureWidth = textWidth;
-		        
+
 		        toReturntextures[i*cols+j] = newTexture;
 		        toReturntextures[i*cols+j].textureHeight = textHeight;
 		        toReturntextures[i*cols+j].textureWidth = textWidth;
 		        */
             }
+        }
 
         return toReturntextures;
     }

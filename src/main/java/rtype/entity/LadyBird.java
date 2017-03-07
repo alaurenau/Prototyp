@@ -53,10 +53,11 @@ public class LadyBird extends Enemy {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.animationTextures[(int) animationCursor].getTextureId());
 
 
-        if (freezing)
+        if (freezing) {
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-        else
+        } else {
             GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        }
 
         GL11.glBegin(GL11.GL_QUADS);
         {
@@ -101,14 +102,17 @@ public class LadyBird extends Enemy {
     @Override
     public boolean collided(Entity entity) {
         if (super.collided(entity)) {
-            if (presetBonus != null)
+            if (presetBonus != null) {
                 bonus = presetBonus;
+            }
 
-            if (bonus == null && Prototyp.random.nextInt(BONUS_RANGE) <= BONUS_LIMIT)
+            if (bonus == null && Prototyp.random.nextInt(BONUS_RANGE) <= BONUS_LIMIT) {
                 bonus = BonusFactory.createBonus(Prototyp.random.nextInt(Bonus.BONUS_COUNT) + BONUS_BOOSTER);
+            }
 
-            if (bonus != null)
+            if (bonus != null) {
                 bonus.spawn(this.position, this.speed, Prototyp.bonus);
+            }
 
             return true;
         }

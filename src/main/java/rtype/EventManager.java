@@ -5,17 +5,16 @@ import java.util.ArrayList;
 public class EventManager {
 
     private static EventManager instance;
-
-    ;
-    private ArrayList<KeyListener> listeners = new ArrayList<KeyListener>();
+    private ArrayList<KeyListener> listeners = new ArrayList<>();
 
     //Singleton variable and methods:
     private EventManager() {
     }
 
     public static EventManager instance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new EventManager();
+        }
         return instance;
     }
 

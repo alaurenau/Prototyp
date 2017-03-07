@@ -51,10 +51,11 @@ public class HomingMissile extends AnimatedEntity {
 
     private Entity acquiereNewTarget(Layer targetLayer) {
 
-        if (targetLayer.entities.size() == 0)
+        if (targetLayer.entities.size() == 0) {
             return null;
-        else
+        } else {
             return targetLayer.entities.get(0);
+        }
 
 
     }
@@ -97,8 +98,9 @@ public class HomingMissile extends AnimatedEntity {
         oldPosition.x = position.x;
         oldPosition.y = position.y;
         interpolate(position, speed);
-        if (frozen)
+        if (frozen) {
             return;
+        }
 
 
         smokeAccumulator += smokeGenSpeed * tick;
@@ -116,7 +118,9 @@ public class HomingMissile extends AnimatedEntity {
         }
         if (this.position.x - this.width > (Prototyp.SCREEN_WIDTH / 2) || this.position.x + this.width < -(Prototyp.SCREEN_WIDTH / 2)) {
             unSpawn();
-            if (Logger.isLogActivate) Logger.log(this.getClass().getName() + " died");
+            if (Logger.isLogActivate) {
+                Logger.log(this.getClass().getName() + " died");
+            }
             return;
         }
 
@@ -129,22 +133,26 @@ public class HomingMissile extends AnimatedEntity {
 
         Vector2f targetCooRelativeToThis = new Vector2f();
 
-        if (target.life <= 0)
+        if (target.life <= 0) {
             acquiereNewTarget(target.getLayer());
-        if (target == null)
+        }
+        if (target == null) {
             return;
+        }
 
         targetCooRelativeToThis.x = target.position.x - this.position.x;
         targetCooRelativeToThis.y = target.position.y - this.position.y;
 
 
         speedAngleInRadians = (float) Math.atan2(speed.y, speed.x);
-        if (speedAngleInRadians < 0)
+        if (speedAngleInRadians < 0) {
             speedAngleInRadians += 2 * Math.PI;
+        }
 
         targetAngleInRadians = (float) Math.atan2(targetCooRelativeToThis.y, targetCooRelativeToThis.x);
-        if (targetAngleInRadians < 0)
+        if (targetAngleInRadians < 0) {
             targetAngleInRadians += 2 * Math.PI;
+        }
 
         if (speedAngleInRadians > targetAngleInRadians) {
             angleDifferenceInRadians = speedAngleInRadians - targetAngleInRadians;
@@ -157,10 +165,12 @@ public class HomingMissile extends AnimatedEntity {
 
         if (Math.abs(angleDifferenceInRadians) > maxRadianManiability) {
             angleToAdd = maxRadianManiability;
-            if (angleDifferenceInRadians < 0)
+            if (angleDifferenceInRadians < 0) {
                 angleToAdd = -angleToAdd;
-        } else
+            }
+        } else {
             angleToAdd = angleDifferenceInRadians;
+        }
 
 
         GLUTILS.rotateAroundZ(this.speed, angleToAdd);

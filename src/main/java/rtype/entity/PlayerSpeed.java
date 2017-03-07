@@ -39,10 +39,12 @@ public class PlayerSpeed extends AnimatedEntity {
 
     public void draw() {
         if (this.displayAnimation) {
-            if (animationCursor > 0)
+            if (animationCursor > 0) {
                 animationCursor += animationSpeed * tick;
-            if (animationCursor >= animationTextures.length)
+            }
+            if (animationCursor >= animationTextures.length) {
                 animationCursor = 0;
+            }
         }
 
         GL11.glColor4f(1f, 1f, 1f, 1f);

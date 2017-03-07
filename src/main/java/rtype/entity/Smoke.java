@@ -36,7 +36,9 @@ public class Smoke extends AnimatedEntity {
     public void draw() {
         if ((int) animationCursor == this.animationTextures.length - 1) {
             unSpawn();
-            if (Logger.isLogActivate) Logger.log("Removed explosion from explosion layer");
+            if (Logger.isLogActivate) {
+                Logger.log("Removed explosion from explosion layer");
+            }
             return;
         }
 

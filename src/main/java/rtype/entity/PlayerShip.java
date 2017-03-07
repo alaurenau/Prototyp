@@ -80,10 +80,12 @@ public class PlayerShip extends AnimatedEntity {
 
 
     public void setOrb(Orb orb) {
-        if (this.orb != null && this.orb.type == orb.type)
+        if (this.orb != null && this.orb.type == orb.type) {
             return;
-        if (this.orb != null)
+        }
+        if (this.orb != null) {
             this.orb.unSpawn();
+        }
         this.orb = orb;
         this.orb.spawn(new Vector2f(-430, 0), new Vector2f(0, 0), Prototyp.bullets);
     }
@@ -154,21 +156,18 @@ public class PlayerShip extends AnimatedEntity {
             public void onKeyDown() {
             }
 
-            ;
-
             public void keyPressed() {
-                if (orb != null)
+                if (orb != null) {
                     orb.setMove(Orb.ADJUDTING);
+                }
             }
-
-            ;
 
             public void onKeyUp() {
-                if (orb != null)
+                if (orb != null) {
                     orb.setMove(Orb.STICKED);
+                }
             }
 
-            ;
         };
         EventManager.instance().addListener(fire2Key, fire2KeyEvent);
 
@@ -176,17 +175,15 @@ public class PlayerShip extends AnimatedEntity {
         KeyListener upKeyEvent = new KeyListener() {
             public void keyPressed() {
                 speed.y += ACCELLERATION * tick;
-                if (speed.y > MAX_SPEED)
+                if (speed.y > MAX_SPEED) {
                     speed.y = MAX_SPEED;
+                }
             }
-
-            ;
 
             public void onKeyUp() {
                 y_deceleration = -DEFAULT_DECELERATION;
             }
 
-            ;
         };
         EventManager.instance().addListener(upKey, upKeyEvent);
 
@@ -195,21 +192,17 @@ public class PlayerShip extends AnimatedEntity {
 
             }
 
-            ;
-
             public void keyPressed() {
                 speed.y -= ACCELLERATION * tick;
-                if (speed.y < -MAX_SPEED)
+                if (speed.y < -MAX_SPEED) {
                     speed.y = -MAX_SPEED;
+                }
             }
-
-            ;
 
             public void onKeyUp() {
                 y_deceleration = DEFAULT_DECELERATION;
             }
 
-            ;
         };
         EventManager.instance().addListener(downKey, downKeyEvent);
 
@@ -219,21 +212,17 @@ public class PlayerShip extends AnimatedEntity {
 
             }
 
-            ;
-
             public void keyPressed() {
                 speed.x -= ACCELLERATION * tick;
-                if (speed.x < -MAX_SPEED)
+                if (speed.x < -MAX_SPEED) {
                     speed.x = -MAX_SPEED;
+                }
             }
-
-            ;
 
             public void onKeyUp() {
                 x_deceleration = DEFAULT_DECELERATION;
             }
 
-            ;
         };
         EventManager.instance().addListener(leftKey, leftKeyEvent);
 
@@ -242,23 +231,19 @@ public class PlayerShip extends AnimatedEntity {
 
             }
 
-            ;
-
             public void keyPressed() {
                 speed.x += ACCELLERATION * tick;
-                if (speed.x > MAX_SPEED)
+                if (speed.x > MAX_SPEED) {
                     speed.x = MAX_SPEED;
+                }
                 accelerateEntrity.startAnimation();
             }
-
-            ;
 
             public void onKeyUp() {
                 accelerateEntrity.stopAnimation();
                 x_deceleration = -DEFAULT_DECELERATION;
             }
 
-            ;
         };
         EventManager.instance().addListener(rightKey, rightKeyEvent);
 
@@ -267,43 +252,44 @@ public class PlayerShip extends AnimatedEntity {
             public void onKeyDown() {
                 concentrateAnimation.fire(0.1f);
                 concentrateAnimation.startChargingAnimation();
-                if (orb != null)
+                if (orb != null) {
                     orb.startChargingAnimation();
+                }
 
 
-                if (booster1 != null)
+                if (booster1 != null) {
                     booster1.fire(0);
+                }
 
-                if (booster2 != null)
+                if (booster2 != null) {
                     booster2.fire(0);
+                }
             }
-
-            ;
 
             public void keyPressed() {
                 power += POWER_SPEED * Prototyp.tick;
-                if (power > MAX_POWER)
+                if (power > MAX_POWER) {
                     power = MAX_POWER;
+                }
             }
-
-            ;
 
             public void onKeyUp() {
                 // Fire blast if power is high enought...
                 if (power > (MAX_POWER / 10)) {
                     concentrateAnimation.fire(power / MAX_POWER);
-                    if (orb != null)
+                    if (orb != null) {
                         orb.fire(power / MAX_POWER);
+                    }
 
                 }
                 power = 0;
                 concentrateAnimation.stopChargingAnimation();
 
-                if (orb != null)
+                if (orb != null) {
                     orb.stopChargingAnimation();
+                }
             }
 
-            ;
         };
         EventManager.instance().addListener(fire1Key, fire1KeyEvent);
     }
@@ -317,18 +303,20 @@ public class PlayerShip extends AnimatedEntity {
     protected Vector2f interpolate(Vector2f old_position, Vector2f speed) {
         old_position.x = old_position.x + tick * speed.x;
 
-        if (old_position.x > Prototyp.SCREEN_WIDTH / 2)
+        if (old_position.x > Prototyp.SCREEN_WIDTH / 2) {
             old_position.x = Prototyp.SCREEN_WIDTH / 2;
-        else if (old_position.x < -Prototyp.SCREEN_WIDTH / 2)
+        } else if (old_position.x < -Prototyp.SCREEN_WIDTH / 2) {
             old_position.x = -Prototyp.SCREEN_WIDTH / 2;
+        }
 
 
         old_position.y = old_position.y + tick * speed.y;
 
-        if (old_position.y > Prototyp.SCREEN_HEIGHT / 2)
+        if (old_position.y > Prototyp.SCREEN_HEIGHT / 2) {
             old_position.y = Prototyp.SCREEN_HEIGHT / 2;
-        else if (old_position.y < -Prototyp.SCREEN_HEIGHT / 2)
+        } else if (old_position.y < -Prototyp.SCREEN_HEIGHT / 2) {
             old_position.y = -Prototyp.SCREEN_HEIGHT / 2;
+        }
 
         return old_position;
     }

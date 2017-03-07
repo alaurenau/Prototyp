@@ -81,12 +81,14 @@ public class MagneticOrb extends Orb {
                         diffY = this.position.y - enemy.position.y;
 
                         diffXcarre = diffX * diffX;
-                        if (diffXcarre > 40000)
+                        if (diffXcarre > 40000) {
                             continue;
+                        }
 
                         diffYcarre = diffY * diffY;
-                        if (diffYcarre > 40000)
+                        if (diffYcarre > 40000) {
                             continue;
+                        }
 
                         distanceFromOrb = (float) Math.sqrt(diffXcarre + diffYcarre);
 
@@ -105,7 +107,8 @@ public class MagneticOrb extends Orb {
                     updateOrbAngle();
                 }
             }
-        } else
+        } else {
             super.update();
+        }
     }
 }

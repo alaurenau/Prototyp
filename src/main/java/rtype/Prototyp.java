@@ -142,15 +142,13 @@ public class Prototyp {
         Bonus b = BonusFactory.createBonus(IEntity.BONUS_LIGHTNING_ORB);
         b.spawn(new Vector2f(player1.position.x + 100, player1.position.y), DEFAULT_SCROLLING_SPEED, bonus);
 
-
         addControlKeys();
-
 
         while (!gameOff) {
             heartBeat();
             getEntries();
             update();
-            checkCollisons();
+            checkCollisions();
             render();
 
             frames++;
@@ -169,11 +167,10 @@ public class Prototyp {
     }
 
     private void createWindow(int screenWidth, int screenHeight, boolean fullscreen) throws Exception {
-
-
         if (!fullscreen) // create windowed mode
+        {
             Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
-        else {
+        } else {
             Display.setFullscreen(true);
             try {
                 DisplayMode dm[] = org.lwjgl.util.Display.getAvailableDisplayModes(320, 240, -1, -1, -1, -1, 60, 85);
@@ -216,20 +213,21 @@ public class Prototyp {
         text.update();
     }
 
-    private void checkCollisons() {
+    private void checkCollisions() {
         // Check bullets with enemies
         ArrayList<Entity> bulletsArray = bullets.entities;
         ArrayList<Entity> enemiesArray = enemies.entities;
-        Entity currentBullet = null;
-        Entity currentEnemy = null;
+        Entity currentBullet;
+        Entity currentEnemy;
         for (int i = 0; i < bulletsArray.size(); i++) {
 
-
             for (int j = 0; j < enemiesArray.size(); j++) {
-                if (j < 0)
+                if (j < 0) {
                     continue;
-                if (i < 0)
+                }
+                if (i < 0) {
                     break;
+                }
                 currentBullet = bulletsArray.get(i);
                 currentEnemy = enemiesArray.get(j);
 
@@ -238,11 +236,13 @@ public class Prototyp {
                 )) {
                     player1.hiscore++;
 
-                    if (currentBullet.collided(currentEnemy))
+                    if (currentBullet.collided(currentEnemy)) {
                         i--;
+                    }
 
-                    if (currentEnemy.collided(currentBullet))
+                    if (currentEnemy.collided(currentBullet)) {
                         j--;
+                    }
                 }
 
             }
@@ -251,7 +251,7 @@ public class Prototyp {
 
         // Check players with bonuses
         ArrayList<Entity> bonusArray = bonus.entities;
-        Entity currentBonus = null;
+        Entity currentBonus;
         for (int j = 0; j < bonusArray.size(); j++) {
             currentBonus = bonusArray.get(j);
             if (
@@ -260,8 +260,9 @@ public class Prototyp {
                     )
 
                     ) {
-                if (currentBonus.collided(player1))
+                if (currentBonus.collided(player1)) {
                     j--;
+                }
                 player1.collided(currentBonus);
             }
         }
@@ -303,7 +304,6 @@ public class Prototyp {
 
     private void initGL() {
 
-
         GL11.glEnable(GL11.GL_TEXTURE_2D); // Enable Texture Mapping
 
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // Black Background
@@ -315,7 +315,7 @@ public class Prototyp {
         GL11.glLoadIdentity(); // Reset The Projection Matrix
 
 
-        GLU.gluOrtho2D(-(int) SCREEN_WIDTH / 2, (int) SCREEN_WIDTH / 2, (int) -SCREEN_HEIGHT / 2, (int) SCREEN_HEIGHT / 2);
+        GLU.gluOrtho2D(-SCREEN_WIDTH / 2, SCREEN_WIDTH / 2, -SCREEN_HEIGHT / 2, SCREEN_HEIGHT / 2);
 
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
@@ -338,35 +338,37 @@ public class Prototyp {
                 }
             }
 
-            ;
         };
         EventManager.instance().addListener(Keyboard.KEY_P, pauseKeyEvent);
 
 
         KeyListener homingMissileKeyEvent = new KeyListener() {
             public void onKeyDown() {
-                if (generator.contains(homingGenerator))
+                if (generator.contains(homingGenerator)) {
                     generator.removeGenerator(homingGenerator);
-                else
+                } else {
                     generator.addGenerator(homingGenerator);
+                }
             }
         };
         EventManager.instance().addListener(Keyboard.KEY_F1, homingMissileKeyEvent);
 
         KeyListener enemiesKeyEvent = new KeyListener() {
             public void onKeyDown() {
-                if (generator.contains(ladyBirdGenerator))
+                if (generator.contains(ladyBirdGenerator)) {
                     generator.removeGenerator(ladyBirdGenerator);
-                else
+                } else {
                     generator.addGenerator(ladyBirdGenerator);
+                }
             }
         };
         EventManager.instance().addListener(Keyboard.KEY_F2, enemiesKeyEvent);
     }
 
     private void getEntries() {
-        if (exitRequested())
+        if (exitRequested()) {
             gameOff = true;
+        }
 
         EventManager.instance().checkEvents();
 
@@ -399,7 +401,7 @@ public class Prototyp {
         // It is used later for deformations effects
         saveScreen();
 
-        applyDistorsions();
+        applyDistortions();
 
         bullets.render();
 
@@ -416,8 +418,38 @@ public class Prototyp {
     private void saveScreen() {
         GL11.glLoadIdentity();
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, SCREEN_TEXTURE_ID);
-        GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, (int) SCREEN_WIDTH, (int) SCREEN_HEIGHT);
+        GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+    }
+
+    // draw_fb is a quick and dirty fix, fb should be in a specificl layer "postFadeEffect" or something
+    public void fadeScreen(boolean draw_fb) {
+
+        if (fadeAlpha > 0.1) {
+
+            GL11.glLoadIdentity();
+            GL11.glTranslatef(0, 0, Prototyp.DEFAULT_Z);
+            GL11.glColor4f(0, 0, 0, fadeAlpha / 1.2f);
+            GL11.glDisable(GL11.GL_TEXTURE_2D);
+            //GL11.glColor4f(0.5f,0.5f,0.5f,0.5f);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+            GL11.glBegin(GL11.GL_QUADS);
+            {
+                GL11.glVertex2f(Prototyp.SCREEN_WIDTH / 2, -Prototyp.SCREEN_HEIGHT / 2);
+                GL11.glVertex2f(-Prototyp.SCREEN_WIDTH / 2, -Prototyp.SCREEN_HEIGHT / 2);
+                GL11.glVertex2f(-Prototyp.SCREEN_WIDTH / 2, Prototyp.SCREEN_HEIGHT / 2);
+                GL11.glVertex2f(Prototyp.SCREEN_WIDTH / 2, Prototyp.SCREEN_HEIGHT / 2);
+            }
+            GL11.glEnd();
+            GL11.glColor4f(1, 1, 1, 1);
+            GL11.glEnable(GL11.GL_TEXTURE_2D);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+        }
+
+        if (player1 != null && player1.orb != null && player1.orb.fb != null && player1.orb.fb.displayAnimation && draw_fb) {
+            player1.orb.fb.updateTick();
+            player1.orb.fb.draw(fadeAlpha * 2);
+        }
     }
 
     // This is called when player charge power
@@ -436,13 +468,13 @@ public class Prototyp {
        -											-
        ----------------------------------------------
     */
-    private void applyDistorsions() {
+    private void applyDistortions() {
 
-        if (player1 == null)
+        if (player1 == null) {
             return;
+        }
 
         float chargeP = player1.power / PlayerShip.MAX_POWER;
-
 
         float R_WIDTH = 350 * chargeP;
         float R_HEIGHT = 200 * chargeP;
@@ -538,36 +570,6 @@ public class Prototyp {
         GL11.glEnd();
         //GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE);
         GL11.glColor4f(1, 1, 1, 1);
-    }
-
-    public void fadeScreen(boolean draw_fb) // draw_fb is a quick and dirty fix, fb should be in a specificl layer "postFadeEffect" or something
-    {
-
-        if (fadeAlpha > 0.1) {
-
-            GL11.glLoadIdentity();
-            GL11.glTranslatef(0, 0, Prototyp.DEFAULT_Z);
-            GL11.glColor4f(0, 0, 0, fadeAlpha / 1.2f);
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            //GL11.glColor4f(0.5f,0.5f,0.5f,0.5f);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            GL11.glBegin(GL11.GL_QUADS);
-            {
-                GL11.glVertex2f(Prototyp.SCREEN_WIDTH / 2, -Prototyp.SCREEN_HEIGHT / 2);
-                GL11.glVertex2f(-Prototyp.SCREEN_WIDTH / 2, -Prototyp.SCREEN_HEIGHT / 2);
-                GL11.glVertex2f(-Prototyp.SCREEN_WIDTH / 2, Prototyp.SCREEN_HEIGHT / 2);
-                GL11.glVertex2f(Prototyp.SCREEN_WIDTH / 2, Prototyp.SCREEN_HEIGHT / 2);
-            }
-            GL11.glEnd();
-            GL11.glColor4f(1, 1, 1, 1);
-            GL11.glEnable(GL11.GL_TEXTURE_2D);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-        }
-
-        if (player1 != null && player1.orb != null && player1.orb.fb != null && player1.orb.fb.displayAnimation && draw_fb) {
-            player1.orb.fb.updateTick();
-            player1.orb.fb.draw(fadeAlpha * 2);
-        }
     }
 
     // Not used, would need more work

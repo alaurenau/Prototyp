@@ -62,7 +62,9 @@ public class RapidFireBullet extends Bullet {
         }
         if (this.position.x - this.width > (Prototyp.SCREEN_WIDTH / 2) || this.position.x + this.width < -(Prototyp.SCREEN_WIDTH / 2)) {
             unSpawn();
-            if (Logger.isLogActivate) Logger.log(this.getClass().getName() + " died");
+            if (Logger.isLogActivate) {
+                Logger.log(this.getClass().getName() + " died");
+            }
             return;
         }
     }

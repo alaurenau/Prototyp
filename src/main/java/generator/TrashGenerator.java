@@ -44,8 +44,9 @@ public class TrashGenerator extends IGenerator {
             trashDeltaacc = 0;
             trashType = Prototyp.random.nextInt(2) + 9;
             spawningTrash = new SpaceTrash(trashType);
-            if (Prototyp.random.nextInt(2) == 0)
+            if (Prototyp.random.nextInt(2) == 0) {
                 rotationSpeed = -rotationSpeed;
+            }
             spawningTrash.spawn(new Vector2f(Prototyp.SCREEN_WIDTH / 2 + 10, Prototyp.random.nextInt() % Prototyp.SCREEN_HEIGHT / 2), defaultTrashSpeed, rotationSpeed, layers[Prototyp.random.nextInt(3) % 2]);
         }
     }

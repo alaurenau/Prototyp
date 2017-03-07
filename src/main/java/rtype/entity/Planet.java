@@ -27,8 +27,9 @@ public class Planet extends Entity {
     public Planet(int type) {
         this.type = type;
         init();
-        if (type == PLANET)
+        if (type == PLANET) {
             this.setRatio(0.65f);
+        }
 
         //this.flipXAxis();
         //this.flipYAxis();

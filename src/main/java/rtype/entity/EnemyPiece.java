@@ -39,7 +39,9 @@ public class EnemyPiece extends Entity {
     public void draw() {
         if (alpha < 0) {
             unSpawn();
-            if (Logger.isLogActivate) Logger.log("Removed explosion from explosion layer");
+            if (Logger.isLogActivate) {
+                Logger.log("Removed explosion from explosion layer");
+            }
             return;
         }
 

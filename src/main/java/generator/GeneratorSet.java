@@ -27,8 +27,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GeneratorSet {
-    ArrayList<IGenerator> generators = new ArrayList<IGenerator>();
-    float timeAccumulator = 0;
+    private ArrayList<IGenerator> generators = new ArrayList<>();
+    private float timeAccumulator = 0;
 
     public void addGenerator(IGenerator gen) {
         generators.add(gen);
@@ -41,15 +41,17 @@ public class GeneratorSet {
     public void generate() {
         timeAccumulator += Prototyp.tick;
 
-        IGenerator generator = null;
+        IGenerator generator;
         for (Iterator<IGenerator> iterator = generators.iterator(); iterator.hasNext(); ) {
             generator = iterator.next();
 
-            if (timeAccumulator > generator.getDelay())
+            if (timeAccumulator > generator.getDelay()) {
                 generator.generateEntities();
+            }
 
-            if (generator.isDone())
+            if (generator.isDone()) {
                 iterator.remove();
+            }
         }
 
     }

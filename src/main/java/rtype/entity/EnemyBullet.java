@@ -38,7 +38,9 @@ public class EnemyBullet extends Entity {
         super.draw();
         if (this.position.x > Prototyp.SCREEN_WIDTH / 2) {
             unSpawn();
-            if (Logger.isLogActivate) Logger.log("Enemy Bullet died");
+            if (Logger.isLogActivate) {
+                Logger.log("Enemy Bullet died");
+            }
             return;
         }
     }

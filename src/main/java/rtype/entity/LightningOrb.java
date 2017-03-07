@@ -107,7 +107,7 @@ public class LightningOrb extends Orb {
         p3[2] = new Vector2f(840, 0);
         p3[3] = new Vector2f(940, 0);
 
-        OrbBeam ob3 = new OrbBeam(this, p3, 3f, Prototyp.random.nextInt(2) == 0 ? false : true, 1f, 1f, 1f, 0.85f, 15, MIN_BEAM_HEIGHT - 10);
+        OrbBeam ob3 = new OrbBeam(this, p3, 3f, Prototyp.random.nextInt(2) != 0, 1f, 1f, 1f, 0.85f, 15, MIN_BEAM_HEIGHT - 10);
         ob3.spawn(this.position, new Vector2f(-75.3f, 0), Prototyp.fx);
 
         Vector2f[] p4 = new Vector2f[4];
@@ -116,7 +116,7 @@ public class LightningOrb extends Orb {
         p4[2] = new Vector2f(440, 0);
         p4[3] = new Vector2f(940, 0);
 
-        OrbBeam ob4 = new OrbBeam(this, p3, 55f, Prototyp.random.nextInt(2) == 0 ? false : true, 1f, 1f, 1f, 0.3f, 15, MIN_BEAM_HEIGHT - 40);
+        OrbBeam ob4 = new OrbBeam(this, p3, 55f, Prototyp.random.nextInt(2) != 0, 1f, 1f, 1f, 0.3f, 15, MIN_BEAM_HEIGHT - 40);
         ob4.spawn(this.position, new Vector2f(-75.3f, 0), Prototyp.fx);
 
 		/*
@@ -137,7 +137,7 @@ public class LightningOrb extends Orb {
         p6[2] = new Vector2f(440, 0);
         p6[3] = new Vector2f(940, 0);
 
-        OrbBeam ob6 = new OrbBeam(this, p3, 20f, Prototyp.random.nextInt(2) == 0 ? false : true, 1f, 1f, 1f, 0.8f, 0, MIN_BEAM_HEIGHT - 40);
+        OrbBeam ob6 = new OrbBeam(this, p3, 20f, Prototyp.random.nextInt(2) != 0, 1f, 1f, 1f, 0.8f, 0, MIN_BEAM_HEIGHT - 40);
         ob6.spawn(this.position, new Vector2f(-75.3f, 0), Prototyp.fx);
 
 
@@ -162,18 +162,22 @@ public class LightningOrb extends Orb {
                 for (int j = 0; j < enemyArray.size(); j++) {
                     currentEnemy = enemyArray.get(j);
                     if (currentEnemy.position.x > this.position.x && currentEnemy.position.y > this.position.y) {
-                        if (betweenTwoLines(currentEnemy))
-                            if (currentEnemy.collided(this))
+                        if (betweenTwoLines(currentEnemy)) {
+                            if (currentEnemy.collided(this)) {
                                 j--;
+                            }
+                        }
                     }
                 }
             } else {
                 for (int j = 0; j < enemyArray.size(); j++) {
                     currentEnemy = enemyArray.get(j);
                     if (currentEnemy.position.x < this.position.x && currentEnemy.position.y > this.position.y) {
-                        if (betweenTwoLines(currentEnemy))
-                            if (currentEnemy.collided(this))
+                        if (betweenTwoLines(currentEnemy)) {
+                            if (currentEnemy.collided(this)) {
                                 j--;
+                            }
+                        }
                     }
                 }
             }
@@ -183,18 +187,22 @@ public class LightningOrb extends Orb {
                 for (int j = 0; j < enemyArray.size(); j++) {
                     currentEnemy = enemyArray.get(j);
                     if (currentEnemy.position.x > this.position.x && currentEnemy.position.y < this.position.y) {
-                        if (betweenTwoLines(currentEnemy))
-                            if (currentEnemy.collided(this))
+                        if (betweenTwoLines(currentEnemy)) {
+                            if (currentEnemy.collided(this)) {
                                 j--;
+                            }
+                        }
                     }
                 }
             } else {
                 for (int j = 0; j < enemyArray.size(); j++) {
                     currentEnemy = enemyArray.get(j);
                     if (currentEnemy.position.x < this.position.x && currentEnemy.position.y < this.position.y) {
-                        if (betweenTwoLines(currentEnemy))
-                            if (currentEnemy.collided(this))
+                        if (betweenTwoLines(currentEnemy)) {
+                            if (currentEnemy.collided(this)) {
                                 j--;
+                            }
+                        }
                     }
                 }
             }

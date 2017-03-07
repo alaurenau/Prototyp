@@ -62,12 +62,14 @@ public class OrbBeam extends Entity {
         int i, k;
 
 
-        for (i = 0, k = 1; i < (int) p.length - 1; i++, k++) {
+        for (i = 0, k = 1; i < p.length - 1; i++, k++) {
             p1 = p[i];
             p2 = p[k];
             meltingPoints.add(0, p1);
             Vector2f norm = GLUTILS.makeNormalForPoints(p1, p2);
-            if (Logger.isLogActivate) Logger.log("norm" + norm);
+            if (Logger.isLogActivate) {
+                Logger.log("norm" + norm);
+            }
 
 
             int ran = (int) (Prototyp.random.nextInt() % modulo + minimalArcHeight);
@@ -82,15 +84,17 @@ public class OrbBeam extends Entity {
                     );
 
             if (bWay) {
-                if (norm.y * ran > this.maxNormalWidth)
+                if (norm.y * ran > this.maxNormalWidth) {
                     this.maxNormalWidth = norm.y * ran;
+                }
             } else {
-                if (-norm.y * ran < this.minNormalWidth)
+                if (-norm.y * ran < this.minNormalWidth) {
                     this.minNormalWidth = -norm.y * ran;
+                }
             }
             bWay = !bWay;
 
-            float f = 1.0f / (float) (SEQ_IN_BEAM + 1);
+            float f = 1.0f / (SEQ_IN_BEAM + 1);
             float s = f;
 
 
@@ -124,7 +128,9 @@ public class OrbBeam extends Entity {
     public void draw() {
         if (a < 0) {
             layer.remove(this);
-            if (Logger.isLogActivate) Logger.log("OrbBeam removed itself from the layer");
+            if (Logger.isLogActivate) {
+                Logger.log("OrbBeam removed itself from the layer");
+            }
             return;
         }
 
@@ -146,7 +152,7 @@ public class OrbBeam extends Entity {
         GL11.glBegin(GL11.GL_QUADS);
         {
 
-            for (int i = 0; i < (int) meltingPoints.size() - 2; i++) {
+            for (int i = 0; i < meltingPoints.size() - 2; i++) {
 
                 p = (Vector2f) meltingPoints.get(i);
                 p2 = (Vector2f) meltingPoints.get(i + 1);

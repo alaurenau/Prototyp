@@ -173,9 +173,9 @@ public class WorkAroundTextureLoader implements ITextureLoader {
 
         BufferedImage buffImage = null;
         try {
-            if (imageCache.get(path) != null)
+            if (imageCache.get(path) != null) {
                 buffImage = (BufferedImage) imageCache.get(path);
-            else {
+            } else {
                 System.out.println("Loading image:" + path);
                 buffImage = ImageIO.read(this.getClass().getResource(path));
 
@@ -206,8 +206,9 @@ public class WorkAroundTextureLoader implements ITextureLoader {
 
         DataBufferByte dataBufferByte = ((DataBufferByte) buffImage.getRaster().getDataBuffer());
 
-        for (int i = 0; i < textHeight; i++)
+        for (int i = 0; i < textHeight; i++) {
             scratch.put(dataBufferByte.getData(), (xOffSet + (yOffSet + i) * buffImage.getWidth()) * bytesPerPixel, textWidth * bytesPerPixel);
+        }
 
         scratch.rewind();
 
@@ -238,10 +239,11 @@ public class WorkAroundTextureLoader implements ITextureLoader {
         Texture[] toReturntextures = new Texture[cols * rows];
 
 
-        for (int i = 0; i < rows; i++)
+        for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 toReturntextures[i * cols + j] = loadTexture(path, j * textWidth + xOffSet, i * textHeight + yOffSet, textWidth, textHeight);
             }
+        }
 
         return toReturntextures;
     }

@@ -68,7 +68,9 @@ public abstract class Bonus extends AnimatedEntity {
         interpolate(position, speed);
         if (this.position.x - this.width > (Prototyp.SCREEN_WIDTH / 2) || this.position.x + this.width < -(Prototyp.SCREEN_WIDTH / 2)) {
             unSpawn();
-            if (Logger.isLogActivate) Logger.log(this.getClass().getName() + " died");
+            if (Logger.isLogActivate) {
+                Logger.log(this.getClass().getName() + " died");
+            }
             return;
         }
     }

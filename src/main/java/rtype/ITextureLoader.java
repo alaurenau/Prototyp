@@ -23,10 +23,10 @@ package rtype;
 
 public interface ITextureLoader {
 
-    public abstract void init();
+    void init();
 
-    public abstract Texture getTexture(int textureID);
+    Texture getTexture(int textureID);
 
-    public abstract Texture[] getAnimation(int animationID);
+    Texture[] getAnimation(int animationID);
 
 }

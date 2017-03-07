@@ -39,8 +39,9 @@ public class EnemyWave extends IGenerator {
             generatedUnitCounter++;
         }
 
-        if (generatedUnitCounter > maxUnitGenerated)
+        if (generatedUnitCounter > maxUnitGenerated) {
             this.done = true;
+        }
     }
 
 }

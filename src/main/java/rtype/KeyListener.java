@@ -14,23 +14,23 @@ public class KeyListener {
     public void onKeyDown() {
     }
 
-    ;    // This is triggered exactly when the key is pressed.
+    // This is triggered exactly when the key is pressed.
 
     public void keyPressed() {
     }
 
-    ;    // This is triggered will the key is being pressed.
+    // This is triggered will the key is being pressed.
 
     public void onKeyUp() {
     }
 
-    ;        // This is triggered exactly when the key is released.
+    // This is triggered exactly when the key is released.
 
     public void checkKey() {
         if (Keyboard.isKeyDown(keyMonitored)) {
-            if (keyMonitoredWasPressed)
+            if (keyMonitoredWasPressed) {
                 keyPressed();
-            else {
+            } else {
                 keyMonitoredWasPressed = true;
                 onKeyDown();
             }

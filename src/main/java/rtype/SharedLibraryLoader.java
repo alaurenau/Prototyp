@@ -33,7 +33,7 @@ import java.util.zip.ZipFile;
  * @author Nathan Sweet
  */
 public class SharedLibraryLoader {
-    static private final HashSet<String> loadedLibraries = new HashSet<String>();
+    static private final HashSet<String> loadedLibraries = new HashSet<>();
     static public boolean isWindows = System.getProperty("os.name").contains("Windows");
     static public boolean isLinux = System.getProperty("os.name").contains("Linux");
     static public boolean isMac = System.getProperty("os.name").contains("Mac");
@@ -64,7 +64,7 @@ public class SharedLibraryLoader {
     static {
         // Don't extract natives if using JWS.
         try {
-            Method method = Class.forName("javax.jnlp.ServiceManager").getDeclaredMethod("lookup", new Class[]{String.class});
+            Method method = Class.forName("javax.jnlp.ServiceManager").getDeclaredMethod("lookup", String.class);
             method.invoke(null, "javax.jnlp.PersistenceService");
             load = false;
         } catch (Throwable ex) {
@@ -97,22 +97,28 @@ public class SharedLibraryLoader {
      * Extracts the LWJGL native libraries from the classpath and sets the "org.lwjgl.librarypath" system property.
      */
     static public synchronized void load(boolean disableOpenAL) {
-        if (!load) return;
+        if (!load) {
+            return;
+        }
 
         SharedLibraryLoader loader = new SharedLibraryLoader();
         File nativesDir = null;
         try {
             if (SharedLibraryLoader.isWindows) {
                 nativesDir = loader.extractFile(SharedLibraryLoader.is64Bit ? "lwjgl64.dll" : "lwjgl32.dll", null).getParentFile();
-                if (!disableOpenAL)
+                if (!disableOpenAL) {
                     loader.extractFile(SharedLibraryLoader.is64Bit ? "OpenAL64.dll" : "OpenAL32.dll", nativesDir.getName());
+                }
             } else if (SharedLibraryLoader.isMac) {
                 nativesDir = loader.extractFile("liblwjgl.dylib", null).getParentFile();
-                if (!disableOpenAL) loader.extractFile("libopenal.dylib", nativesDir.getName());
+                if (!disableOpenAL) {
+                    loader.extractFile("libopenal.dylib", nativesDir.getName());
+                }
             } else if (SharedLibraryLoader.isLinux) {
                 nativesDir = loader.extractFile(SharedLibraryLoader.is64Bit ? "liblwjgl64.so" : "liblwjgl32.so", null).getParentFile();
-                if (!disableOpenAL)
+                if (!disableOpenAL) {
                     loader.extractFile(SharedLibraryLoader.is64Bit ? "libopenal64.so" : "libopenal32.so", nativesDir.getName());
+                }
             }
         } catch (Throwable ex) {
             throw new RuntimeException("Unable to extract LWJGL natives.", ex);
@@ -125,13 +131,17 @@ public class SharedLibraryLoader {
      * Returns a CRC of the remaining bytes in the stream.
      */
     public String crc(InputStream input) {
-        if (input == null) throw new IllegalArgumentException("input cannot be null.");
+        if (input == null) {
+            throw new IllegalArgumentException("input cannot be null.");
+        }
         CRC32 crc = new CRC32();
         byte[] buffer = new byte[4096];
         try {
             while (true) {
                 int length = input.read(buffer);
-                if (length == -1) break;
+                if (length == -1) {
+                    break;
+                }
                 crc.update(buffer, 0, length);
             }
         } catch (Exception ex) {
@@ -149,9 +159,15 @@ public class SharedLibraryLoader {
      * Maps a platform independent library name to a platform dependent name.
      */
     public String mapLibraryName(String libraryName) {
-        if (isWindows) return libraryName + (is64Bit ? "64.dll" : ".dll");
-        if (isLinux) return "lib" + libraryName + (isARM ? "arm" + abi : "") + (is64Bit ? "64.so" : ".so");
-        if (isMac) return "lib" + libraryName + (is64Bit ? "64.dylib" : ".dylib");
+        if (isWindows) {
+            return libraryName + (is64Bit ? "64.dll" : ".dll");
+        }
+        if (isLinux) {
+            return "lib" + libraryName + (isARM ? "arm" + abi : "") + (is64Bit ? "64.so" : ".so");
+        }
+        if (isMac) {
+            return "lib" + libraryName + (is64Bit ? "64.dylib" : ".dylib");
+        }
         return libraryName;
     }
 
@@ -162,16 +178,21 @@ public class SharedLibraryLoader {
      */
     public synchronized void load(String libraryName) {
         // in case of iOS, things have been linked statically to the executable, bail out.
-        if (isIos) return;
+        if (isIos) {
+            return;
+        }
 
         libraryName = mapLibraryName(libraryName);
-        if (loadedLibraries.contains(libraryName)) return;
+        if (loadedLibraries.contains(libraryName)) {
+            return;
+        }
 
         try {
-            if (isAndroid)
+            if (isAndroid) {
                 System.loadLibrary(libraryName);
-            else
+            } else {
                 loadFile(libraryName);
+            }
         } catch (Throwable ex) {
             throw new RuntimeException("Couldn't load shared library '" + libraryName + "' for target: "
                     + System.getProperty("os.name") + (is64Bit ? ", 64-bit" : ", 32-bit"), ex);
@@ -182,7 +203,9 @@ public class SharedLibraryLoader {
     private InputStream readFile(String path) {
         if (nativesJar == null) {
             InputStream input = SharedLibraryLoader.class.getResourceAsStream("/" + path);
-            if (input == null) throw new RuntimeException("Unable to read file for extraction: " + path);
+            if (input == null) {
+                throw new RuntimeException("Unable to read file for extraction: " + path);
+            }
             return input;
         }
 
@@ -191,7 +214,9 @@ public class SharedLibraryLoader {
         try {
             file = new ZipFile(nativesJar);
             ZipEntry entry = file.getEntry(path);
-            if (entry == null) throw new RuntimeException("Couldn't find '" + path + "' in JAR: " + nativesJar);
+            if (entry == null) {
+                throw new RuntimeException("Couldn't find '" + path + "' in JAR: " + nativesJar);
+            }
             return file.getInputStream(entry);
         } catch (IOException ex) {
             throw new RuntimeException("Error reading '" + path + "' in JAR: " + nativesJar, ex);
@@ -216,14 +241,18 @@ public class SharedLibraryLoader {
     public File extractFile(String sourcePath, String dirName) throws IOException {
         try {
             String sourceCrc = crc(readFile(sourcePath));
-            if (dirName == null) dirName = sourceCrc;
+            if (dirName == null) {
+                dirName = sourceCrc;
+            }
 
             File extractedFile = getExtractedFile(dirName, new File(sourcePath).getName());
             return extractFile(sourcePath, sourceCrc, extractedFile);
         } catch (RuntimeException ex) {
             // Fallback to file at java.library.path location, eg for applets.
             File file = new File(System.getProperty("java.library.path"), sourcePath);
-            if (file.exists()) return file;
+            if (file.exists()) {
+                return file;
+            }
             throw ex;
         }
     }
@@ -235,25 +264,33 @@ public class SharedLibraryLoader {
         // Temp directory with username in path.
         File idealFile = new File(System.getProperty("java.io.tmpdir") + "/libgdx" + System.getProperty("user.name") + "/"
                 + dirName, fileName);
-        if (canWrite(idealFile)) return idealFile;
+        if (canWrite(idealFile)) {
+            return idealFile;
+        }
 
         // System provided temp directory.
         try {
             File file = File.createTempFile(dirName, null);
             if (file.delete()) {
                 file = new File(file, fileName);
-                if (canWrite(file)) return file;
+                if (canWrite(file)) {
+                    return file;
+                }
             }
         } catch (IOException ignored) {
         }
 
         // User home.
         File file = new File(System.getProperty("user.home") + "/.libgdx/" + dirName, fileName);
-        if (canWrite(file)) return file;
+        if (canWrite(file)) {
+            return file;
+        }
 
         // Relative directory.
         file = new File(".temp/" + dirName, fileName);
-        if (canWrite(file)) return file;
+        if (canWrite(file)) {
+            return file;
+        }
 
         return idealFile; // Will likely fail, but we did our best.
     }
@@ -265,18 +302,21 @@ public class SharedLibraryLoader {
         File parent = file.getParentFile();
         File testFile;
         if (file.exists()) {
-            if (!file.canWrite() || !canExecute(file)) return false;
+            if (!file.canWrite() || !canExecute(file)) {
+                return false;
+            }
             // Don't overwrite existing file just to check if we can write to directory.
             testFile = new File(parent, UUID.randomUUID().toString());
         } else {
             parent.mkdirs();
-            if (!parent.isDirectory()) return false;
+            if (!parent.isDirectory()) {
+                return false;
+            }
             testFile = file;
         }
         try {
             new FileOutputStream(testFile).close();
-            if (!canExecute(testFile)) return false;
-            return true;
+            return canExecute(testFile);
         } catch (Throwable ex) {
             return false;
         } finally {
@@ -287,7 +327,9 @@ public class SharedLibraryLoader {
     private boolean canExecute(File file) {
         try {
             Method canExecute = File.class.getMethod("canExecute");
-            if ((Boolean) canExecute.invoke(file)) return true;
+            if ((Boolean) canExecute.invoke(file)) {
+                return true;
+            }
 
             Method setExecutable = File.class.getMethod("setExecutable", boolean.class, boolean.class);
             setExecutable.invoke(file, true, false);
@@ -316,7 +358,9 @@ public class SharedLibraryLoader {
                 byte[] buffer = new byte[4096];
                 while (true) {
                     int length = input.read(buffer);
-                    if (length == -1) break;
+                    if (length == -1) {
+                        break;
+                    }
                     output.write(buffer, 0, length);
                 }
                 input.close();
@@ -342,22 +386,30 @@ public class SharedLibraryLoader {
         File file = new File(System.getProperty("java.io.tmpdir") + "/libgdx" + System.getProperty("user.name") + "/" + sourceCrc,
                 fileName);
         Throwable ex = loadFile(sourcePath, sourceCrc, file);
-        if (ex == null) return;
+        if (ex == null) {
+            return;
+        }
 
         // System provided temp directory.
         try {
             file = File.createTempFile(sourceCrc, null);
-            if (file.delete() && loadFile(sourcePath, sourceCrc, file) == null) return;
+            if (file.delete() && loadFile(sourcePath, sourceCrc, file) == null) {
+                return;
+            }
         } catch (Throwable ignored) {
         }
 
         // User home.
         file = new File(System.getProperty("user.home") + "/.libgdx/" + sourceCrc, fileName);
-        if (loadFile(sourcePath, sourceCrc, file) == null) return;
+        if (loadFile(sourcePath, sourceCrc, file) == null) {
+            return;
+        }
 
         // Relative directory.
         file = new File(".temp/" + sourceCrc, fileName);
-        if (loadFile(sourcePath, sourceCrc, file) == null) return;
+        if (loadFile(sourcePath, sourceCrc, file) == null) {
+            return;
+        }
 
         // Fallback to java.library.path location, eg for applets.
         file = new File(System.getProperty("java.library.path"), sourcePath);

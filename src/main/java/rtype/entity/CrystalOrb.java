@@ -72,8 +72,9 @@ public class CrystalOrb extends Orb {
                 calculateDistanceFromShip();
                 if (startedFreezeProcess || distanceFromShip > 250) {
                     startedFreezeProcess = true;
-                    if (enemiesToFreeze == null)
+                    if (enemiesToFreeze == null) {
                         buildListOfEnemiesToFreeze();
+                    }
 
                     freezeTickCounter += tick;
                     for (int i = 0; i < enemiesToFreeze.size(); i++) {
@@ -86,8 +87,9 @@ public class CrystalOrb extends Orb {
                     updateOrbAngle();
                 }
             }
-        } else
+        } else {
             super.update();
+        }
     }
 
     private void buildListOfEnemiesToFreeze() {
@@ -119,10 +121,11 @@ public class CrystalOrb extends Orb {
         toInserted = false;
         int i = 0;
         while (i < enemiesToFreeze.size() && !toInserted) {
-            if (enemiesToFreeze.get(i).distanceFromOrb > enemy.distanceFromOrb)
+            if (enemiesToFreeze.get(i).distanceFromOrb > enemy.distanceFromOrb) {
                 toInserted = true;
-            else
+            } else {
                 i++;
+            }
         }
         enemiesToFreeze.add(i, enemy);
     }

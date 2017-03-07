@@ -41,7 +41,9 @@ public class RapidFireBulletGhost extends Entity {
     public void draw() {
         if (alphaCursor < 0) {
             unSpawn();
-            if (Logger.isLogActivate) Logger.log("Removed explosion from explosion layer");
+            if (Logger.isLogActivate) {
+                Logger.log("Removed explosion from explosion layer");
+            }
             return;
         }
 

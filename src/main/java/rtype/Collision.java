@@ -25,14 +25,18 @@ import rtype.entity.Entity;
 
 public class Collision {
     public static boolean boxBoxOverlap(Entity entityA, Entity entityB) {
-        if (entityA.position.x + entityA.width < entityB.position.x)
+        if (entityA.position.x + entityA.width < entityB.position.x) {
             return false;
-        if (entityA.position.y + entityA.height < entityB.position.y)
+        }
+        if (entityA.position.y + entityA.height < entityB.position.y) {
             return false;
-        if (entityA.position.x > entityB.position.x + entityB.width)
+        }
+        if (entityA.position.x > entityB.position.x + entityB.width) {
             return false;
-        if (entityA.position.y > entityB.position.y + entityB.height)
+        }
+        if (entityA.position.y > entityB.position.y + entityB.height) {
             return false;
+        }
         return true;
     }
 }

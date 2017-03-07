@@ -163,15 +163,18 @@ public abstract class Entity implements IEntity {
         this.rotation += rotationSpeed * tick;
         if (this.position.x - this.width > (Prototyp.SCREEN_WIDTH / 2) || this.position.x + this.width < -(Prototyp.SCREEN_WIDTH / 2)) {
             unSpawn();
-            if (Logger.isLogActivate) Logger.log(this.getClass().getName() + " died");
+            if (Logger.isLogActivate) {
+                Logger.log(this.getClass().getName() + " died");
+            }
             return;
         }
     }
 
     // Return true is the current Entity is destroyed.
     public boolean collided(Entity entity) {
-        if (entity == this)
+        if (entity == this) {
             return false;
+        }
 
         this.life -= entity.damage;
         if (life < 0) {
@@ -235,8 +238,9 @@ public abstract class Entity implements IEntity {
 
                 }
             }
-        } else
+        } else {
             tick = Prototyp.tick;
+        }
 
     }
 

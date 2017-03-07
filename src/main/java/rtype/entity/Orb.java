@@ -85,15 +85,16 @@ public abstract class Orb extends Weapon {
 
         if (this.displayChargeAnimation) {
             chargeAnimationCursor += chargeAnimationSpeed * tick;
-            if (chargeAnimationCursor >= animationTextures.length)
+            if (chargeAnimationCursor >= animationTextures.length) {
                 chargeAnimationCursor = animationTextures.length - 1;
+            }
 
             float alphaPercentage = chargeAnimationCursor / (animationTextures.length - 1);
             alphaPercentage *= 2.5;
 
-            if (alphaPercentage > 0.6f)
+            if (alphaPercentage > 0.6f) {
                 alphaPercentage = 0.6f;
-            else if (alphaPercentage < 0.15) {
+            } else if (alphaPercentage < 0.15) {
                 alphaPercentage = 0;
             }
 
@@ -103,8 +104,9 @@ public abstract class Orb extends Weapon {
             //fb.tick = tick;
             //fb.draw(alphaPercentage*5);
 
-        } else
+        } else {
             Prototyp.fadeAlpha = 0;
+        }
     }
 
     public boolean collided(Entity entity) {
@@ -115,19 +117,19 @@ public abstract class Orb extends Weapon {
         float xDiff = position.x - playerShip.position.x;
         float yDiff = position.y - playerShip.position.y;
         rotationRadians = Math.atan(yDiff / xDiff);
-        if (xDiff < 0)
+        if (xDiff < 0) {
             rotationRadians += Math.PI;
+        }
 
-        if (rotationRadians < 0)
+        if (rotationRadians < 0) {
             rotationRadians = 2 * Math.PI + rotationRadians;
+        }
 
         //if (xDiff < 0)
         //	this.rotationRadians += 2 * Math.PI;
         this.rotation = GLUTILS.radiansToDegres((float) rotationRadians);
         //if (xDiff < 0)
         //	this.rotation += 180 ;
-
-        this.rotation = (float) this.rotation;
     }
 
     public void calculateDistanceFromShip() {
