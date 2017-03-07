@@ -103,9 +103,9 @@ public class SharedLibraryLoader {
         File nativesDir = null;
         try {
             if (SharedLibraryLoader.isWindows) {
-                nativesDir = loader.extractFile(SharedLibraryLoader.is64Bit ? "lwjgl.dll" : "lwjgl32.dll", null).getParentFile();
+                nativesDir = loader.extractFile(SharedLibraryLoader.is64Bit ? "lwjgl64.dll" : "lwjgl32.dll", null).getParentFile();
                 if (!disableOpenAL)
-                    loader.extractFile(SharedLibraryLoader.is64Bit ? "OpenAL.dll" : "OpenAL32.dll", nativesDir.getName());
+                    loader.extractFile(SharedLibraryLoader.is64Bit ? "OpenAL64.dll" : "OpenAL32.dll", nativesDir.getName());
             } else if (SharedLibraryLoader.isMac) {
                 nativesDir = loader.extractFile("liblwjgl.dylib", null).getParentFile();
                 if (!disableOpenAL) loader.extractFile("libopenal.dylib", nativesDir.getName());
