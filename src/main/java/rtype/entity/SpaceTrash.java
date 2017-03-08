@@ -29,7 +29,6 @@ public class SpaceTrash extends Entity {
         this.type = type;
         init();
         this.setRatio(0.5f);
-
     }
 
     public void draw() {

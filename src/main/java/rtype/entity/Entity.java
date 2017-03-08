@@ -23,11 +23,12 @@ package rtype.entity;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
+import rtype.Constants;
 import rtype.Layer;
 import rtype.Prototyp;
 import rtype.Texture;
 
-public abstract class Entity implements IEntity {
+public abstract class Entity {
     private static final int ROTATION_SPEED = 260;
     public static Vector2f speedNull = new Vector2f(0, 0);
     private static EnemyPiece ep1 = null;
@@ -117,7 +118,7 @@ public abstract class Entity implements IEntity {
 
     public void draw() {
         GL11.glLoadIdentity();
-        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z);                     // Translate Into/Out Of The Screen By z
+        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z); // Translate Into/Out Of The Screen By z
         GL11.glRotatef(this.rotation, 0f, 0f, 1f);
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture.getTextureId());
@@ -161,12 +162,12 @@ public abstract class Entity implements IEntity {
     public void update() {
         interpolate(position, speed);
         this.rotation += rotationSpeed * tick;
-        if (this.position.x - this.width > (Prototyp.SCREEN_WIDTH / 2) || this.position.x + this.width < -(Prototyp.SCREEN_WIDTH / 2)) {
+        if (this.position.x - this.width > (Prototyp.SCREEN_WIDTH / 2)
+            || this.position.x + this.width < -(Prototyp.SCREEN_WIDTH / 2)) {
             unSpawn();
             if (Logger.isLogActivate) {
                 Logger.log(this.getClass().getName() + " died");
             }
-            return;
         }
     }
 
@@ -180,19 +181,19 @@ public abstract class Entity implements IEntity {
         if (life < 0) {
             this.unSpawn();
 
-            ex = new Explosion(Prototyp.random.nextInt(2) + IEntity.EXPLOSION1);
+            ex = new Explosion(Prototyp.random.nextInt(2) + Constants.EXPLOSION1);
             ex.spawn(this.position, this.speed, Prototyp.random.nextInt(ROTATION_SPEED), Prototyp.frontground);
 
-            ep1 = new EnemyPiece(Prototyp.random.nextInt(8) + IEntity.ENEMY_PIECE_1);
+            ep1 = new EnemyPiece(Prototyp.random.nextInt(8) + Constants.ENEMY_PIECE_1);
             ep1.spawn(this.position, speedUp2, Prototyp.random.nextInt(ROTATION_SPEED), Prototyp.frontground);
 
-            ep2 = new EnemyPiece(Prototyp.random.nextInt(8) + IEntity.ENEMY_PIECE_1);
+            ep2 = new EnemyPiece(Prototyp.random.nextInt(8) + Constants.ENEMY_PIECE_1);
             ep2.spawn(this.position, speedDown, Prototyp.random.nextInt(ROTATION_SPEED), Prototyp.frontground);
 
-            ep3 = new EnemyPiece(Prototyp.random.nextInt(8) + IEntity.ENEMY_PIECE_1);
+            ep3 = new EnemyPiece(Prototyp.random.nextInt(8) + Constants.ENEMY_PIECE_1);
             ep3.spawn(this.position, new Vector2f(entity.speed.x, this.speed.y), Prototyp.random.nextInt(ROTATION_SPEED), Prototyp.frontground);
 
-            ep4 = new EnemyPiece(Prototyp.random.nextInt(8) + IEntity.ENEMY_PIECE_1);
+            ep4 = new EnemyPiece(Prototyp.random.nextInt(8) + Constants.ENEMY_PIECE_1);
             ep4.spawn(this.position, new Vector2f(entity.speed.x, -this.speed.y), Prototyp.random.nextInt(ROTATION_SPEED), Prototyp.frontground);
 
             return true;

@@ -23,6 +23,8 @@ package rtype.entity;
 
 import org.lwjgl.opengl.GL11;
 
+import static rtype.Constants.PLANET;
+
 public class Planet extends Entity {
     public Planet(int type) {
         this.type = type;

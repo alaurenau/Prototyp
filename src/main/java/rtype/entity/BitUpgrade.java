@@ -26,21 +26,23 @@ import org.lwjgl.util.vector.Vector2f;
 import rtype.Layer;
 import rtype.Prototyp;
 
+import static rtype.Constants.BIT_UPGRADE;
+
 public class BitUpgrade extends Weapon {
 
     static final float VELOCITY = 2;
     PlayerShip playerShip = null;
-    Vector2f postionRelativeToPlayerShip = new Vector2f(0, 0);
+    Vector2f positionRelativeToPlayerShip = new Vector2f(0, 0);
     float xDiff = 0;
     float yDiff = 0;
     float distanceFromShip = 0;
+
     public BitUpgrade(PlayerShip playerShip) {
         this.type = BIT_UPGRADE;
         this.playerShip = playerShip;
         init();
         animationSpeed = 30f;
         setRatio(0.40f);
-
     }
 
     @Override
@@ -72,8 +74,8 @@ public class BitUpgrade extends Weapon {
     public void update() {
 
         // Modify speed
-        xDiff = (playerShip.position.x + postionRelativeToPlayerShip.x) - position.x;
-        yDiff = (playerShip.position.y + postionRelativeToPlayerShip.y) - position.y;
+        xDiff = (playerShip.position.x + positionRelativeToPlayerShip.x) - position.x;
+        yDiff = (playerShip.position.y + positionRelativeToPlayerShip.y) - position.y;
         distanceFromShip = (float) Math.sqrt(xDiff * xDiff + yDiff * yDiff);
         if (distanceFromShip > 10) {
             speed.x = xDiff * VELOCITY;
@@ -96,13 +98,11 @@ public class BitUpgrade extends Weapon {
 
     @Override
     public void spawn(Vector2f position, Vector2f spawningPlace, Layer layer) {
-        this.postionRelativeToPlayerShip.x = position.x;
-        this.postionRelativeToPlayerShip.y = position.y;
+        this.positionRelativeToPlayerShip.x = position.x;
+        this.positionRelativeToPlayerShip.y = position.y;
         this.position.x = spawningPlace.x;
         this.position.y = spawningPlace.y;
         this.layer = layer;
-        this.speed.y = speed.y;
-        this.speed.x = speed.x;
         this.layer.add(this);
     }
 
@@ -120,8 +120,6 @@ public class BitUpgrade extends Weapon {
             HomingMissile m = new HomingMissile(Prototyp.enemies, (float) Math.PI / 1000);
             m.spawn(position, new Vector2f(400, 0), Prototyp.bullets);
         }
-
     }
-
 
 }

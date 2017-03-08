@@ -25,6 +25,8 @@ import rtype.Prototyp;
 
 import java.util.ArrayList;
 
+import static rtype.Constants.GREEN_ORB;
+
 public class CrystalOrb extends Orb {
 
 
@@ -95,9 +97,9 @@ public class CrystalOrb extends Orb {
     private void buildListOfEnemiesToFreeze() {
         // Used freezingRange to populate
         enemiesToFreeze = new ArrayList();
-        Entity enemy = null;
-        float diffX = 0;
-        float diffY = 0;
+        Entity enemy;
+        float diffX;
+        float diffY;
 
         ArrayList<Entity> enemies = Prototyp.enemies.entities;
         for (int i = 0; i < enemies.size(); i++) {

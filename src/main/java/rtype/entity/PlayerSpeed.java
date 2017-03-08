@@ -24,6 +24,8 @@ package rtype.entity;
 import org.lwjgl.opengl.GL11;
 import rtype.Prototyp;
 
+import static rtype.Constants.PLAYER_SPEED;
+
 public class PlayerSpeed extends AnimatedEntity {
     private PlayerShip playerShip = null;
 
@@ -34,7 +36,6 @@ public class PlayerSpeed extends AnimatedEntity {
         animationSpeed = 30.4f;
         setRatio(0.75f);
         animationCursor = 1;
-
     }
 
     public void draw() {
@@ -49,8 +50,9 @@ public class PlayerSpeed extends AnimatedEntity {
 
         GL11.glColor4f(1f, 1f, 1f, 1f);
 
+        // Translate Into/Out Of The Screen By z
         GL11.glLoadIdentity();
-        GL11.glTranslatef(playerShip.position.x - 58, playerShip.position.y - 10, Prototyp.DEFAULT_Z);                     // Translate Into/Out Of The Screen By z
+        GL11.glTranslatef(playerShip.position.x - 58, playerShip.position.y - 10, Prototyp.DEFAULT_Z);
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.animationTextures[(int) animationCursor].getTextureId());
         //GL11.glCallList(this.displayList);
@@ -78,6 +80,5 @@ public class PlayerSpeed extends AnimatedEntity {
     public void stopAnimation() {
         this.displayAnimation = false;
         this.animationCursor = 1;
-
     }
 }

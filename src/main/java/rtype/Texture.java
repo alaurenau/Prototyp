@@ -21,7 +21,6 @@
 
 package rtype;
 
-
 public class Texture {
     int textureId;
     int textureHeight;
@@ -32,7 +31,6 @@ public class Texture {
      */
 
     public Texture() {
-
     }
 
 

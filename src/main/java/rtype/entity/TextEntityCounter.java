@@ -10,7 +10,6 @@ public class TextEntityCounter extends Text {
 
     public TextEntityCounter(String string) {
         super(string);
-
     }
 
     public void update() {

@@ -26,6 +26,9 @@ import org.lwjgl.util.vector.Vector2f;
 import rtype.BonusFactory;
 import rtype.Prototyp;
 
+import static rtype.Constants.BONUS_BOOSTER;
+import static rtype.Constants.LADYBIRD;
+
 public class LadyBird extends Enemy {
     Bonus bonus = null;
     private int BONUS_RANGE = 600;
@@ -129,6 +132,5 @@ public class LadyBird extends Enemy {
     public void setPresetBonus(Bonus presetBonus) {
         this.presetBonus = presetBonus;
     }
-
 
 }

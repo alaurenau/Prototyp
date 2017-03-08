@@ -24,6 +24,8 @@ package rtype.entity;
 import org.lwjgl.opengl.GL11;
 import rtype.Prototyp;
 
+import static rtype.Constants.FIRE_BALL;
+
 public class FireBall extends AnimatedEntity {
 
     Entity orb = null;

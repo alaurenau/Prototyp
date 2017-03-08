@@ -22,7 +22,10 @@
 package rtype.entity;
 
 import org.lwjgl.util.vector.Vector2f;
+import rtype.Constants;
 import rtype.Prototyp;
+
+import static rtype.Constants.BULLET_RAPID_FIRE;
 
 public class RapidFireBullet extends Bullet {
     private static final float GHOST_LIMIT = 5;
@@ -30,6 +33,7 @@ public class RapidFireBullet extends Bullet {
     private float ghostAccumulator = 0;
     private float ghostGenSpeed = 800f;
     private RapidFireBulletGhost ghost = null;
+
     public RapidFireBullet(float rotation) {
         this.rotation = rotation;
         this.type = BULLET_RAPID_FIRE;
@@ -43,7 +47,7 @@ public class RapidFireBullet extends Bullet {
         this.life -= entity.damage;
         if (life < 0) {
             this.unSpawn();
-            hit = new BulletHit(IEntity.BULLET_HIT_YELLOW);
+            hit = new BulletHit(Constants.BULLET_HIT_YELLOW);
             hit.spawn(this.position, new Vector2f(0, 0), Prototyp.fx);
             return true;
         }
@@ -65,7 +69,6 @@ public class RapidFireBullet extends Bullet {
             if (Logger.isLogActivate) {
                 Logger.log(this.getClass().getName() + " died");
             }
-            return;
         }
     }
 

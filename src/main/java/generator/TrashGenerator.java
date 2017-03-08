@@ -22,26 +22,26 @@
 package generator;
 
 import org.lwjgl.util.vector.Vector2f;
+import rtype.Constants;
 import rtype.Layer;
 import rtype.Prototyp;
-import rtype.entity.IEntity;
 import rtype.entity.SpaceTrash;
 
-public class TrashGenerator extends IGenerator {
+public class TrashGenerator extends Generator {
 
-    static final Vector2f defaultTrashSpeed = new Vector2f(-34.3f, 0);
-    static final Layer[] layers = {Prototyp.background, Prototyp.frontground};
-    static float lastTrash = 0;
-    static SpaceTrash spawningTrash = null;
-    static int trashType = IEntity.SPACE_TRASH_1;
-    static float trashSpawningRate = 3f;
-    static float trashDeltaacc = 0;
-    static float rotationSpeed = 2f;
+    private static final Vector2f defaultTrashSpeed = new Vector2f(-34.3f, 0);
+    private static final Layer[] layers = {Prototyp.background, Prototyp.frontground};
+    private static float lastTrash = 0;
+    private static SpaceTrash spawningTrash = null;
+    private static int trashType = Constants.SPACE_TRASH_1;
+    private static float trashSpawningRate = 3f;
+    private static float trashDeltaAcc = 0;
+    private static float rotationSpeed = 2f;
 
     public void generateEntities() {
-        trashDeltaacc += Prototyp.tick;
-        if (trashDeltaacc > trashSpawningRate) {
-            trashDeltaacc = 0;
+        trashDeltaAcc += Prototyp.tick;
+        if (trashDeltaAcc > trashSpawningRate) {
+            trashDeltaAcc = 0;
             trashType = Prototyp.random.nextInt(2) + 9;
             spawningTrash = new SpaceTrash(trashType);
             if (Prototyp.random.nextInt(2) == 0) {

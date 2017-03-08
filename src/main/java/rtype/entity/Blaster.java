@@ -25,14 +25,16 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 import rtype.Prototyp;
 
+import static rtype.Constants.FORCE_CHARGE;
+
 public class Blaster extends Weapon {
+
     public Blaster(PlayerShip player) {
         this.playerShip = player;
         this.type = FORCE_CHARGE;
         init();
         animationSpeed = 28.4f;
         setRatio(0.55f);
-
     }
 
     public void draw() {
@@ -68,7 +70,6 @@ public class Blaster extends Weapon {
 
     public void startChargingAnimation() {
         this.displayChargeAnimation = true;
-
     }
 
     public void stopChargingAnimation() {
@@ -81,8 +82,6 @@ public class Blaster extends Weapon {
         fb.spawn(playerShip.position, new Vector2f(770, 0), Prototyp.bullets);
 
         //Prototyp.bullets.add(fb);
-
     }
-
 
 }

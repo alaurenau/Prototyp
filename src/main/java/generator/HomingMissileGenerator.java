@@ -25,21 +25,20 @@ import org.lwjgl.util.vector.Vector2f;
 import rtype.Prototyp;
 import rtype.entity.HomingMissile;
 
-public class HomingMissileGenerator extends IGenerator {
+public class HomingMissileGenerator extends Generator {
 
-
-    static final Vector2f defaultMissileSpeed = new Vector2f(-600.3f, 0);
-    static HomingMissile hmissile = null;
+    private static final Vector2f defaultMissileSpeed = new Vector2f(-600.3f, 0);
+    private static HomingMissile homingMissile = null;
     //static float homingMissileRate = 0.01f;
-    static float homingMissileRate = 1f;
-    static float homingMissileDeltaacc = 0;
+    private static float homingMissileRate = 1f;
+    private static float homingMissileDeltaAcc = 0;
 
     public void generateEntities() {
-        homingMissileDeltaacc += Prototyp.tick;
-        if (homingMissileDeltaacc > homingMissileRate) {
-            homingMissileDeltaacc = 0;
-            hmissile = new HomingMissile(Prototyp.enemies, (float) Math.PI / 1000);
-            hmissile.spawn(new Vector2f(Prototyp.SCREEN_WIDTH / 2 + 10, Prototyp.random.nextInt() % Prototyp.SCREEN_HEIGHT / 2), defaultMissileSpeed, Prototyp.enemies);
+        homingMissileDeltaAcc += Prototyp.tick;
+        if (homingMissileDeltaAcc > homingMissileRate) {
+            homingMissileDeltaAcc = 0;
+            homingMissile = new HomingMissile(Prototyp.enemies, (float) Math.PI / 1000);
+            homingMissile.spawn(new Vector2f(Prototyp.SCREEN_WIDTH / 2 + 10, Prototyp.random.nextInt() % Prototyp.SCREEN_HEIGHT / 2), defaultMissileSpeed, Prototyp.enemies);
         }
     }
 

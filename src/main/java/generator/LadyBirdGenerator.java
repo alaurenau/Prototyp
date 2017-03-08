@@ -25,21 +25,22 @@ import org.lwjgl.util.vector.Vector2f;
 import rtype.Prototyp;
 import rtype.entity.LadyBird;
 
-public class LadyBirdGenerator extends IGenerator {
-    static final Vector2f defaultLadySpeed = new Vector2f(-56.3f, 0);
-    static LadyBird lad = null;
-    static float ladySpawningRate = 0.005f;
+public class LadyBirdGenerator extends Generator {
+
+    private static final Vector2f defaultLadySpeed = new Vector2f(-56.3f, 0);
+    private static LadyBird lad = null;
+    private static float ladySpawningRate = 0.005f;
     //static float ladySpawningRate = 111f;
-    static float ladyDeltaacc = 0;
+    private static float ladyDeltaAcc = 0;
+
     public LadyBirdGenerator(float delay) {
         super(delay);
-        // TODO Auto-generated constructor stub
     }
 
     public void generateEntities() {
-        ladyDeltaacc += Prototyp.tick;
-        if (ladyDeltaacc > ladySpawningRate) {
-            ladyDeltaacc = 0;
+        ladyDeltaAcc += Prototyp.tick;
+        if (ladyDeltaAcc > ladySpawningRate) {
+            ladyDeltaAcc = 0;
             lad = new LadyBird();
             lad.spawn(new Vector2f(Prototyp.SCREEN_WIDTH / 2 + 10, Prototyp.random.nextInt() % Prototyp.SCREEN_HEIGHT / 2), defaultLadySpeed, Prototyp.enemies);
         }

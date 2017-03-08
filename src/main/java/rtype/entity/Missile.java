@@ -24,7 +24,10 @@ package rtype.entity;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
+import rtype.Constants;
 import rtype.Prototyp;
+
+import static rtype.Constants.MISSILE;
 
 public class Missile extends AnimatedEntity {
 
@@ -98,7 +101,7 @@ public class Missile extends AnimatedEntity {
         this.life -= entity.damage;
         if (life < 0) {
             this.unSpawn();
-            ex = new Explosion(Prototyp.random.nextInt(2) + IEntity.EXPLOSION1);
+            ex = new Explosion(Prototyp.random.nextInt(2) + Constants.EXPLOSION1);
             ex.spawn(this.position, speedNull, Prototyp.frontground);
             return true;
         }

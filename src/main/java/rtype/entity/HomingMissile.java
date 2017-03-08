@@ -23,8 +23,11 @@ package rtype.entity;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
+import rtype.Constants;
 import rtype.Layer;
 import rtype.Prototyp;
+
+import static rtype.Constants.MISSILE;
 
 public class HomingMissile extends AnimatedEntity {
 
@@ -37,6 +40,7 @@ public class HomingMissile extends AnimatedEntity {
     private float maxRadianManiability = 0;
     private float smokeAccumulator = 0;
     private float smokeGenSpeed = 130f;
+
     public HomingMissile(Layer targetLayer, float maxRadianManiability) {
         this.target = acquiereNewTarget(targetLayer);
         this.maxRadianManiability = maxRadianManiability;
@@ -126,10 +130,10 @@ public class HomingMissile extends AnimatedEntity {
 
         // Modify direction
 
-        float speedAngleInRadians = 0;
-        float targetAngleInRadians = 0;
-        float angleDifferenceInRadians = 0;
-        float angleToAdd = 0;
+        float speedAngleInRadians;
+        float targetAngleInRadians;
+        float angleDifferenceInRadians;
+        float angleToAdd;
 
         Vector2f targetCooRelativeToThis = new Vector2f();
 
@@ -183,7 +187,7 @@ public class HomingMissile extends AnimatedEntity {
         this.life = -1;
         if (this.life <= 0) {
             this.unSpawn();
-            ex = new Explosion(Prototyp.random.nextInt(2) + IEntity.EXPLOSION1);
+            ex = new Explosion(Prototyp.random.nextInt(2) + Constants.EXPLOSION1);
             ex.spawn(this.position, speedNull, Prototyp.frontground);
             return true;
         }

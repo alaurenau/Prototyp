@@ -22,15 +22,15 @@
 package rtype.entity;
 
 import org.lwjgl.opengl.GL11;
+import rtype.Constants;
 import rtype.Prototyp;
 
 public class Smoke extends AnimatedEntity {
     public Smoke() {
-        this.type = IEntity.SMOKE;
+        this.type = Constants.SMOKE;
         init();
         this.animationSpeed = 16;
         this.setRatio(1.0f);
-
     }
 
     public void draw() {
@@ -46,7 +46,7 @@ public class Smoke extends AnimatedEntity {
         animationCursor %= animationTextures.length;
 
         GL11.glLoadIdentity();
-        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z);                     // Translate Into/Out Of The Screen By z
+        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z); // Translate Into/Out Of The Screen By z
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.animationTextures[(int) animationCursor].getTextureId());
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
@@ -72,6 +72,5 @@ public class Smoke extends AnimatedEntity {
 
         //GL11.glBlendFunc(GL11.GL_SRC_ALPHA,GL11.GL_ONE_MINUS_SRC_ALPHA);
     }
-
 
 }

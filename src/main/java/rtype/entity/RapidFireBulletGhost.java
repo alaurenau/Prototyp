@@ -22,6 +22,7 @@
 package rtype.entity;
 
 import org.lwjgl.opengl.GL11;
+import rtype.Constants;
 import rtype.Prototyp;
 
 public class RapidFireBulletGhost extends Entity {
@@ -31,11 +32,10 @@ public class RapidFireBulletGhost extends Entity {
 
     public RapidFireBulletGhost(float rotation) {
         this.rotation = rotation;
-        this.type = IEntity.BULLET_RAPID_FIRE;
+        this.type = Constants.BULLET_RAPID_FIRE;
         init();
 
         this.setRatio(0.5f);
-
     }
 
     public void draw() {
@@ -51,7 +51,7 @@ public class RapidFireBulletGhost extends Entity {
 
 
         GL11.glLoadIdentity();
-        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z);                     // Translate Into/Out Of The Screen By z
+        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z); // Translate Into/Out Of The Screen By z
         GL11.glRotatef(rotation, 0, 0, 1);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture.getTextureId());
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);

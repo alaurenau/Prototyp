@@ -22,6 +22,7 @@
 package rtype.entity;
 
 import org.lwjgl.util.vector.Vector2f;
+import rtype.Constants;
 import rtype.Prototyp;
 
 public class Bullet extends Entity {
@@ -44,7 +45,7 @@ public class Bullet extends Entity {
         this.life -= entity.damage;
         if (life < 0) {
             this.unSpawn();
-            hit = new BulletHit(IEntity.BULLET_HIT_YELLOW);
+            hit = new BulletHit(Constants.BULLET_HIT_YELLOW);
             hit.spawn(this.position, new Vector2f(0, 0), Prototyp.fx);
             return true;
         }

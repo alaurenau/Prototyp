@@ -47,8 +47,9 @@ public class BulletHit extends AnimatedEntity {
         animationCursor += animationSpeed * tick;
         animationCursor %= animationTextures.length;
 
+        // Translate Into/Out Of The Screen By z
         GL11.glLoadIdentity();
-        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z);                     // Translate Into/Out Of The Screen By z
+        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z);
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.animationTextures[(int) animationCursor].getTextureId());
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);

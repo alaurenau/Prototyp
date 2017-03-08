@@ -24,6 +24,8 @@ package rtype.entity;
 import org.lwjgl.opengl.GL11;
 import rtype.Prototyp;
 
+import static rtype.Constants.EXPLOSION1;
+
 public class Explosion extends AnimatedEntity {
 
 

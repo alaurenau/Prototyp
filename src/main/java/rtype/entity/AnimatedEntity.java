@@ -44,7 +44,6 @@ public abstract class AnimatedEntity extends Entity {
 
     public void startAnimation() {
         this.displayAnimation = true;
-
     }
 
     public void stopAnimation() {

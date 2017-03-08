@@ -33,6 +33,5 @@ public class Star extends Entity {
     public void draw() {
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
         super.draw();
-
     }
 }

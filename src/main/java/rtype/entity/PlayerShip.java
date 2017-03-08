@@ -29,6 +29,8 @@ import rtype.KeyListener;
 import rtype.Layer;
 import rtype.Prototyp;
 
+import static rtype.Constants.PLAYER_SHIP;
+
 
 public class PlayerShip extends AnimatedEntity {
     private final static float MAX_SPEED = 230;
@@ -36,7 +38,7 @@ public class PlayerShip extends AnimatedEntity {
     public static float MAX_POWER = 4f;
     public float powerAccumulator = 0;
     public Orb orb = null;
-    public int hiscore = 1;
+    public int score = 1;
     public float power = 0;
     float POWER_SPEED = 2f;
     Blaster concentrateAnimation = new Blaster(this);
@@ -66,7 +68,6 @@ public class PlayerShip extends AnimatedEntity {
         fire1Key = fire1;
         fire2Key = fire2;
 
-
         concentrateAnimation.spawn(new Vector2f(0, 0), new Vector2f(0, 0), Prototyp.fx);
         accelerateEntrity.spawn(new Vector2f(0, 0), new Vector2f(0, 0), Prototyp.fx);
         this.type = PLAYER_SHIP;
@@ -75,7 +76,6 @@ public class PlayerShip extends AnimatedEntity {
         setRatio(0.25f);
         //this.setOrb(new LightningOrb(this));
         addEventListeners();
-
     }
 
 
@@ -103,7 +103,6 @@ public class PlayerShip extends AnimatedEntity {
         if (booster2 == null) {
             booster2 = new BitUpgrade(this);
             booster2.spawn(new Vector2f(5, -20), new Vector2f(500, 0), layer);
-            return;
         }
     }
 
@@ -114,7 +113,7 @@ public class PlayerShip extends AnimatedEntity {
         GL11.glPushMatrix();
         GL11.glPopMatrix();
 
-        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z);                     // Translate Into/Out Of The Screen By z
+        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z); // Translate Into/Out Of The Screen By z
         int animationFrame = (int) ((speed.y * 4) / MAX_SPEED);
         animationFrame += 4;
 
@@ -138,17 +137,13 @@ public class PlayerShip extends AnimatedEntity {
         }
         GL11.glEnd();
 
-
         //accelerateEntrity .draw();
         //concentrateAnimation.draw();
-
     }
-
 
     public boolean isAnimationStarted() {
         return this.displayAnimation;
     }
-
 
     public void addEventListeners() {
 
@@ -339,7 +334,6 @@ public class PlayerShip extends AnimatedEntity {
             y_deceleration = 0;
             speed.y = 0;
         }
-
-
     }
+
 }

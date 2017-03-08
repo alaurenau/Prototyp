@@ -25,6 +25,8 @@ import rtype.Prototyp;
 
 import java.util.ArrayList;
 
+import static rtype.Constants.RED_ORB;
+
 public class MagneticOrb extends Orb {
 
 
@@ -67,12 +69,12 @@ public class MagneticOrb extends Orb {
                 if (startedAttraction || distanceFromShip > 250) {
                     startedAttraction = true;
                     ArrayList<Entity> enemies = Prototyp.enemies.entities;
-                    Entity enemy = null;
-                    float diffX = 0;
-                    float diffY = 0;
-                    float diffXcarre = 0;
-                    float diffYcarre = 0;
-                    float distanceFromOrb = 0;
+                    Entity enemy;
+                    float diffX;
+                    float diffY;
+                    float diffXcarre;
+                    float diffYcarre;
+                    float distanceFromOrb;
                     attractionTickCounter += tick;
                     for (int i = 0; i < enemies.size(); i++) {
                         enemy = enemies.get(i);

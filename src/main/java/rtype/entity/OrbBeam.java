@@ -27,6 +27,8 @@ import rtype.Prototyp;
 
 import java.util.ArrayList;
 
+import static rtype.Constants.ORB_BEAM;
+
 public class OrbBeam extends Entity {
 
     private static Vector2f controlPoint[] = new Vector2f[3];
@@ -114,7 +116,7 @@ public class OrbBeam extends Entity {
 
     private static Vector2f calculatePointOnCurve(Vector2f[] c, float distance) {
         float a = 1;
-        float b = 0;
+        float b;
         float step = distance;
         Vector2f p = new Vector2f();
         a -= step;
@@ -181,8 +183,6 @@ public class OrbBeam extends Entity {
 
                 GL11.glTexCoord2f(15 / 32.0f, 1);
                 GL11.glVertex2f(p.x + n.x, p.y + n.y);
-
-
             }
         }
         GL11.glEnd();
@@ -201,6 +201,5 @@ public class OrbBeam extends Entity {
     public float getMinNormalWidth() {
         return minNormalWidth;
     }
-
 
 }

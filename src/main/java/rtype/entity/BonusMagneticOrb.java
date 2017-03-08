@@ -21,10 +21,12 @@
 
 package rtype.entity;
 
+import rtype.Constants;
+
 public class BonusMagneticOrb extends Bonus {
 
     public BonusMagneticOrb() {
-        super(IEntity.BONUS_GRAVITY_ORB);
+        super(Constants.BONUS_GRAVITY_ORB);
     }
 
     @Override

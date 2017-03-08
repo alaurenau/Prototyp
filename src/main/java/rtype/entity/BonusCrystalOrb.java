@@ -21,10 +21,12 @@
 
 package rtype.entity;
 
+import rtype.Constants;
+
 public class BonusCrystalOrb extends Bonus {
 
     public BonusCrystalOrb() {
-        super(IEntity.BONUS_CRYSTAL_ORB);
+        super(Constants.BONUS_CRYSTAL_ORB);
     }
 
     @Override

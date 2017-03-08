@@ -21,10 +21,12 @@
 
 package rtype.entity;
 
+import rtype.Constants;
+
 public class BonusBooster extends Bonus {
 
     public BonusBooster() {
-        super(IEntity.BONUS_BOOSTER);
+        super(Constants.BONUS_BOOSTER);
     }
 
     @Override

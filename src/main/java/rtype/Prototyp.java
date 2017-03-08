@@ -78,7 +78,7 @@ public class Prototyp {
     // Generators generate entity for the game
     public static GeneratorSet generator = null;
     // Texture loader is used to load and server textures to entities on init
-    public static ITextureLoader textureLoader = null;
+    public static TextureLoader textureLoader = null;
     public static float fadeAlpha = 0;
     // This is the address where screen copy is stored
     public static int SCREEN_TEXTURE_ID = 0;
@@ -99,10 +99,9 @@ public class Prototyp {
     private int frames;
     // Text object used to display fps, score and entity total count
     private Text textFPS;
-    private Text textHisCore;
-    private TextEntityCounter entitiesCount;
-    private IGenerator ladyBirdGenerator = new LadyBirdGenerator(30);
-    private IGenerator homingGenerator = new HomingMissileGenerator();
+    private Text textScore;
+    private Generator ladyBirdGenerator = new LadyBirdGenerator(30);
+    private Generator homingGenerator = new HomingMissileGenerator();
 
     public Prototyp() {
         init();
@@ -121,12 +120,10 @@ public class Prototyp {
         tick = timer.getTime() - lastTime;
         deltas += tick;
         lastTime = timer.getTime();
-
     }
 
     // Main loop
     public void run() {
-
 
         Intro intro = new Intro(this);
         intro.play();
@@ -134,12 +131,11 @@ public class Prototyp {
         BonusDesc bonusDesc = new BonusDesc(this);
         bonusDesc.play();
 
-
         addBasicEntities();
 
         player1.addEventListeners();
 
-        Bonus b = BonusFactory.createBonus(IEntity.BONUS_LIGHTNING_ORB);
+        Bonus b = BonusFactory.createBonus(Constants.BONUS_LIGHTNING_ORB);
         b.spawn(new Vector2f(player1.position.x + 100, player1.position.y), DEFAULT_SCROLLING_SPEED, bonus);
 
         addControlKeys();
@@ -161,14 +157,13 @@ public class Prototyp {
             Display.update();
             // Display.sync(10);
             generator.generate();
-
         }
         Display.destroy();
     }
 
     private void createWindow(int screenWidth, int screenHeight, boolean fullscreen) throws Exception {
-        if (!fullscreen) // create windowed mode
-        {
+        // create windowed mode
+        if (!fullscreen) {
             Display.setDisplayMode(new DisplayMode(screenWidth, screenHeight));
         } else {
             Display.setFullscreen(true);
@@ -195,12 +190,11 @@ public class Prototyp {
         textFPS = new Text("");
         textFPS.spawn(new Vector2f(SCREEN_WIDTH / 2 - 100, SCREEN_HEIGHT / 2 - 20), new Vector2f(0, 0), text);
 
-        textHisCore = new Text("HISCORE:");
-        textHisCore.spawn(new Vector2f(-SCREEN_WIDTH / 2 + 20, SCREEN_HEIGHT / 2 - 20), new Vector2f(0, 0), text);
+        textScore = new Text("SCORE:");
+        textScore.spawn(new Vector2f(-SCREEN_WIDTH / 2 + 20, SCREEN_HEIGHT / 2 - 20), new Vector2f(0, 0), text);
 
-        entitiesCount = new TextEntityCounter();
+        TextEntityCounter entitiesCount = new TextEntityCounter();
         entitiesCount.spawn(new Vector2f(-SCREEN_WIDTH / 2 + 20, -SCREEN_HEIGHT / 2 + 20), new Vector2f(0, 0), text);
-
     }
 
     void update() {
@@ -234,7 +228,7 @@ public class Prototyp {
                 if (Collision.boxBoxOverlap(currentBullet,
                         currentEnemy
                 )) {
-                    player1.hiscore++;
+                    player1.score++;
 
                     if (currentBullet.collided(currentEnemy)) {
                         i--;
@@ -247,19 +241,14 @@ public class Prototyp {
 
             }
         }
-        textHisCore.setString("HISCORE:" + player1.hiscore);
+        textScore.setString("SCORE:" + player1.score);
 
         // Check players with bonuses
         ArrayList<Entity> bonusArray = bonus.entities;
         Entity currentBonus;
         for (int j = 0; j < bonusArray.size(); j++) {
             currentBonus = bonusArray.get(j);
-            if (
-                    Collision.boxBoxOverlap(player1,
-                            currentBonus
-                    )
-
-                    ) {
+            if (Collision.boxBoxOverlap(player1, currentBonus)) {
                 if (currentBonus.collided(player1)) {
                     j--;
                 }
@@ -275,7 +264,6 @@ public class Prototyp {
 
             createWindow(SCREEN_WIDTH, SCREEN_HEIGHT, FULL_SCREEN);
 
-
             createOffScreenBuffer();
 
             //Display.setVSyncEnabled(true);
@@ -286,7 +274,6 @@ public class Prototyp {
             generator.addGenerator(new IntroGenerator());
             generator.addGenerator(new EnemyWave(100, EnemyWave.rate));
             generator.addGenerator(new EnemyWave(150, EnemyWave.rate / 2));
-
 
             generator.addGenerator(new EnemyWave(-100, EnemyWave.rate + 10));
             generator.addGenerator(new EnemyWave(-150, EnemyWave.rate / 2 + 10));
@@ -314,11 +301,9 @@ public class Prototyp {
         GL11.glMatrixMode(GL11.GL_PROJECTION); // Select The Projection Matrix
         GL11.glLoadIdentity(); // Reset The Projection Matrix
 
-
         GLU.gluOrtho2D(-SCREEN_WIDTH / 2, SCREEN_WIDTH / 2, -SCREEN_HEIGHT / 2, SCREEN_HEIGHT / 2);
 
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
-
 
         textureLoader = new WorkAroundTextureLoader();
         textureLoader.init();
@@ -337,10 +322,8 @@ public class Prototyp {
                     timer.pause();
                 }
             }
-
         };
         EventManager.instance().addListener(Keyboard.KEY_P, pauseKeyEvent);
-
 
         KeyListener homingMissileKeyEvent = new KeyListener() {
             public void onKeyDown() {
@@ -371,7 +354,6 @@ public class Prototyp {
         }
 
         EventManager.instance().checkEvents();
-
     }
 
     boolean exitRequested() {
@@ -419,10 +401,9 @@ public class Prototyp {
         GL11.glLoadIdentity();
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, SCREEN_TEXTURE_ID);
         GL11.glCopyTexSubImage2D(GL11.GL_TEXTURE_2D, 0, 0, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-
     }
 
-    // draw_fb is a quick and dirty fix, fb should be in a specificl layer "postFadeEffect" or something
+    // draw_fb is a quick and dirty fix, fb should be in a specific layer "postFadeEffect" or something
     public void fadeScreen(boolean draw_fb) {
 
         if (fadeAlpha > 0.1) {
@@ -593,7 +574,7 @@ public class Prototyp {
         GL11.glLoadIdentity();
         GL11.glTranslatef(0, 0, Prototyp.DEFAULT_Z);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureLoader.getTexture(IEntity.SCANLINE).getTextureId());
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, textureLoader.getTexture(Constants.SCANLINE).getTextureId());
         GL11.glColor4f(1, 1, 1, 1);
 
         GL11.glBegin(GL11.GL_QUADS);
@@ -624,7 +605,6 @@ public class Prototyp {
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, glType, 1024, 1024, 0, glType, GL11.GL_UNSIGNED_BYTE, scratch);
-
     }
 
 }

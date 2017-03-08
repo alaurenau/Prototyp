@@ -23,6 +23,8 @@ package rtype.entity;
 
 import org.lwjgl.opengl.GL11;
 
+import static rtype.Constants.FORCEBLAST;
+
 public class ForceBlast extends Entity {
     public ForceBlast(float chargePercentage) {
         this.type = FORCEBLAST;

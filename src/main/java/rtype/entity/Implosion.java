@@ -24,6 +24,8 @@ package rtype.entity;
 import org.lwjgl.opengl.GL11;
 import rtype.Prototyp;
 
+import static rtype.Constants.IMPLOSION;
+
 public class Implosion extends AnimatedEntity {
 
 
@@ -47,7 +49,7 @@ public class Implosion extends AnimatedEntity {
         animationCursor %= animationTextures.length;
 
         GL11.glLoadIdentity();
-        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z);                     // Translate Into/Out Of The Screen By z
+        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z); // Translate Into/Out Of The Screen By z
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.animationTextures[(int) animationCursor].getTextureId());
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);

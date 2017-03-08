@@ -24,6 +24,8 @@ package rtype.entity;
 import org.lwjgl.opengl.GL11;
 import rtype.Prototyp;
 
+import static rtype.Constants.FONT;
+
 public class Text extends AnimatedEntity {
     public static final int LEFT_TO_RIGHT = 0;
     public static final int RIGHT_TO_LEFT = 1;
@@ -50,7 +52,7 @@ public class Text extends AnimatedEntity {
 
     public void draw() {
         GL11.glLoadIdentity();
-        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z);                     // Translate Into/Out Of The Screen By z
+        GL11.glTranslatef(position.x, position.y, Prototyp.DEFAULT_Z); // Translate Into/Out Of The Screen By z
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 
         if (mode == LEFT_TO_RIGHT) {
@@ -88,7 +90,6 @@ public class Text extends AnimatedEntity {
 
             GL11.glTexCoord2f(textureRight, textureDown); // Lower right
             GL11.glVertex2f(width, height);
-
         }
         GL11.glEnd();
     }

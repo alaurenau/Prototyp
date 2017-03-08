@@ -27,22 +27,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GeneratorSet {
-    private ArrayList<IGenerator> generators = new ArrayList<>();
+    private ArrayList<Generator> generators = new ArrayList<>();
     private float timeAccumulator = 0;
 
-    public void addGenerator(IGenerator gen) {
+    public void addGenerator(Generator gen) {
         generators.add(gen);
     }
 
-    public void removeGenerator(IGenerator gen) {
+    public void removeGenerator(Generator gen) {
         generators.remove(gen);
     }
 
     public void generate() {
         timeAccumulator += Prototyp.tick;
 
-        IGenerator generator;
-        for (Iterator<IGenerator> iterator = generators.iterator(); iterator.hasNext(); ) {
+        Generator generator;
+        for (Iterator<Generator> iterator = generators.iterator(); iterator.hasNext(); ) {
             generator = iterator.next();
 
             if (timeAccumulator > generator.getDelay()) {
@@ -56,7 +56,7 @@ public class GeneratorSet {
 
     }
 
-    public boolean contains(IGenerator gen) {
+    public boolean contains(Generator gen) {
         return (this.generators.indexOf(gen) > 0);
     }
 }

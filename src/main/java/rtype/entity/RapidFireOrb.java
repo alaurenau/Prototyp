@@ -24,6 +24,8 @@ package rtype.entity;
 import org.lwjgl.util.vector.Vector2f;
 import rtype.Prototyp;
 
+import static rtype.Constants.PINK_ORB;
+
 public class RapidFireOrb extends Orb {
 
     private static final float MAX_BULLETS = 100;
@@ -60,7 +62,8 @@ public class RapidFireOrb extends Orb {
                 bulletsToFire--;
                 bulletTimeCounter = 0;
                 bu = new RapidFireBullet(this.rotation);
-                bu.spawn(this.position, new Vector2f((float) (Math.cos(rotationRadians)) * BULLETS_SPEED, (float) (Math.sin(rotationRadians)) * BULLETS_SPEED), Prototyp.bullets);
+                bu.spawn(this.position, new Vector2f((float) (Math.cos(rotationRadians)) * BULLETS_SPEED,
+                    (float) (Math.sin(rotationRadians)) * BULLETS_SPEED), Prototyp.bullets);
             }
             if (bulletsToFire < 0) {
                 distanceFromShipRequested = DEFAULT_DISTANCE_FROM_SHIP;

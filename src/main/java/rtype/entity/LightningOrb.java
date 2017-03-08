@@ -26,6 +26,8 @@ import rtype.Prototyp;
 
 import java.util.ArrayList;
 
+import static rtype.Constants.BLUE_ORB;
+
 public class LightningOrb extends Orb {
     private static final float MAX_BULLETS = 1;
     private static final float FIRE_RATE_LIMIT = 2;
@@ -54,9 +56,7 @@ public class LightningOrb extends Orb {
 
     public void fire(float chargePercentage) {
         this.bulletsToFire = 2;//(int)MAX_BULLETS * chargePercentage;
-        //distanceFromShipRequested = DEFAULT_DISTANCE_FROM_SHIP_WHEN_FIRING ;
-
-
+        //distanceFromShipRequested = DEFAULT_DISTANCE_FROM_SHIP_WHEN_FIRING;
     }
 
     @Override
@@ -72,10 +72,9 @@ public class LightningOrb extends Orb {
                 fireBeam();
                 //fireBeam();
             }
-            if (bulletsToFire < 0) {
-                //distanceFromShipRequested = DEFAULT_DISTANCE_FROM_SHIP;
-
-            }
+//            if (bulletsToFire < 0) {
+//                distanceFromShipRequested = DEFAULT_DISTANCE_FROM_SHIP;
+//            }
         }
     }
 
@@ -153,7 +152,7 @@ public class LightningOrb extends Orb {
 
         //Detect collision here...
         ArrayList<Entity> enemyArray = Prototyp.enemies.entities;
-        Entity currentEnemy = null;
+        Entity currentEnemy;
 
         if (this.rotationRadians < Math.PI) {
 
@@ -212,9 +211,7 @@ public class LightningOrb extends Orb {
     }
 
     public boolean betweenTwoLines(Entity entity) {
-        return
-                (entity.position.y < (coefDirecteur * entity.position.x + max_ordonneeOrigine) &&
-                        entity.position.y > (coefDirecteur * entity.position.x + min_ordonneeOrigine)
-                );
+        return (entity.position.y < (coefDirecteur * entity.position.x + max_ordonneeOrigine) &&
+                        entity.position.y > (coefDirecteur * entity.position.x + min_ordonneeOrigine));
     }
 }

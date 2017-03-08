@@ -28,19 +28,19 @@ public class BonusFactory {
     public static Bonus createBonus(int type) {
         Bonus b = null;
         switch (type) {
-            case IEntity.BONUS_BOOSTER:
+            case Constants.BONUS_BOOSTER:
                 b = new BonusBooster();
                 break;
-            case IEntity.BONUS_LIGHTNING_ORB:
+            case Constants.BONUS_LIGHTNING_ORB:
                 b = new BonusLightningOrb();
                 break;
-            case IEntity.BONUS_GRAVITY_ORB:
+            case Constants.BONUS_GRAVITY_ORB:
                 b = new BonusMagneticOrb();
                 break;
-            case IEntity.BONUS_RAPID_SHOOT_ORB:
+            case Constants.BONUS_RAPID_SHOOT_ORB:
                 b = new BonusRapidShootOrb();
                 break;
-            case IEntity.BONUS_CRYSTAL_ORB:
+            case Constants.BONUS_CRYSTAL_ORB:
                 b = new BonusCrystalOrb();
                 break;
 

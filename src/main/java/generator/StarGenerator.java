@@ -22,22 +22,22 @@
 package generator;
 
 import org.lwjgl.util.vector.Vector2f;
+import rtype.Constants;
 import rtype.Prototyp;
-import rtype.entity.IEntity;
 import rtype.entity.Star;
 
-public class StarGenerator extends IGenerator {
-    static final Vector2f defaultStarSpeed = new Vector2f(-34.3f, 0);
+public class StarGenerator extends Generator {
+    private static final Vector2f defaultStarSpeed = new Vector2f(-34.3f, 0);
     static float lastStar = 0;
-    static Star spawningStar = null;
-    static int starType = IEntity.STAR_1;
-    static float starSpawningRate = 5f;
-    static float starDeltaacc = 0;
+    private static Star spawningStar = null;
+    private static int starType = Constants.STAR_1;
+    private static float starSpawningRate = 5f;
+    private static float starDeltaAcc = 0;
 
     public void generateEntities() {
-        starDeltaacc += Prototyp.tick;
-        if (starDeltaacc > starSpawningRate) {
-            starDeltaacc = 0;
+        starDeltaAcc += Prototyp.tick;
+        if (starDeltaAcc > starSpawningRate) {
+            starDeltaAcc = 0;
             starType = Prototyp.random.nextInt(6) + 11;
             spawningStar = new Star(starType);
             spawningStar.spawn(new Vector2f(Prototyp.SCREEN_WIDTH / 2 + 10, Prototyp.random.nextInt() % Prototyp.SCREEN_HEIGHT / 2), defaultStarSpeed, Prototyp.background);

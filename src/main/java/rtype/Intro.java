@@ -3,7 +3,6 @@ package rtype;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
-import rtype.entity.IEntity;
 import rtype.entity.Planet;
 import rtype.entity.Text;
 
@@ -16,7 +15,7 @@ public class Intro {
     public Intro(Prototyp prototyp) {
         this.prototyp = prototyp;
 
-        Planet planet = new Planet(IEntity.PLANET);
+        Planet planet = new Planet(Constants.PLANET);
         planet.spawn(new Vector2f(320, 0), new Vector2f(7f * -1, 0), Prototyp.background);
 
         layer = new Layer();
@@ -44,7 +43,7 @@ public class Intro {
         commandLabel3.spawn(new Vector2f(pointX, pointY -= interspace), immobile, layer);
         commandLabel4.spawn(new Vector2f(pointX, pointY -= interspace), immobile, layer);
         commandLabel5.spawn(new Vector2f(pointX, pointY -= interspace), immobile, layer);
-        commandLabel6.spawn(new Vector2f(pointX + 150, pointY -= interspace * 3), immobile, layer);
+        commandLabel6.spawn(new Vector2f(pointX + 150, pointY - (interspace * 3)), immobile, layer);
 
 
         KeyListener space = new KeyListener() {

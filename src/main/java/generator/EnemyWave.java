@@ -6,15 +6,15 @@ import rtype.Prototyp;
 import rtype.entity.Bonus;
 import rtype.entity.LadyBird;
 
-public class EnemyWave extends IGenerator {
+public class EnemyWave extends Generator {
 
-    static final Vector2f defaultLadySpeed = new Vector2f(-76.3f, 0);
+    private static final Vector2f defaultLadySpeed = new Vector2f(-76.3f, 0);
     // Rate at which generating entities.
     public static float rate = 2f;
-    float tickAccumulator = 0;
+    private float tickAccumulator = 0;
 
     // Where the entity will be generated
-    float delayAccumualor = 0;
+    private float delayAccumualor = 0;
     private int x;
     private int generatedUnitCounter = 1;
 

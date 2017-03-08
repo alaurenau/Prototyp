@@ -19,31 +19,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-package generator;
+package rtype;
 
-public abstract class IGenerator {
+public interface TextureLoader {
 
-    boolean done = false;
-    private float delay = 0;
-    public IGenerator(float delay) {
-        this.delay = delay;
-    }
+    void init();
 
-    protected IGenerator() {
+    Texture getTexture(int textureID);
 
-    }
+    Texture[] getAnimation(int animationID);
 
-    abstract void generateEntities();
-
-    void setDone() {
-        done = true;
-    }
-
-    boolean isDone() {
-        return done;
-    }
-
-    public float getDelay() {
-        return delay;
-    }
 }

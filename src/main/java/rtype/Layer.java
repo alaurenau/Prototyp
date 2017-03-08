@@ -27,8 +27,7 @@ import java.util.ArrayList;
 
 public class Layer {
 
-    @SuppressWarnings("unchecked")
-    public ArrayList<Entity> entities = new ArrayList();
+    public ArrayList<Entity> entities = new ArrayList<>();
 
     public Layer() {
     }
@@ -42,21 +41,18 @@ public class Layer {
     }
 
     public void render() {
-        //Entity e = null;
-
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).draw();
         }
     }
 
     public void update() {
-        Entity e = null;
+        Entity e;
 
         for (int i = 0; i < entities.size(); i++) {
             e = entities.get(i);
             e.updateTick();
             e.update();
-
         }
     }
 }
